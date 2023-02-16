@@ -358,6 +358,8 @@
 "Assets/Scripts/doorScript.cs"
 "Assets/Scripts/Movement/CameraLook.cs"
 "Assets/Scripts/Movement/PlayerMovement.cs"
+"Assets/Scripts/Tools/Clipboard/ClipboardScript.cs"
+"Assets/Scripts/Tools/General/Inventory.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"

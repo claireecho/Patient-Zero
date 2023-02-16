@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     private GameObject WRtext;
     public float jump  = 3f;
     public GameObject officeSpawn;
+    private bool canGrabPatient = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,27 +44,28 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = 0;
         }
         controller.Move(velocity * Time.deltaTime);
+
+        if (canGrabPatient) {
+            if (Input.GetKeyDown(KeyCode.E)) {
+                Debug.Log("hi");
+                gameObject.transform.position = officeSpawn.transform.position;
+                transform.Rotate(0, 90f, 0);
+                WRtext.SetActive(false);
+            }
+        }
+
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other = waitingRoomCollider) {
             WRtext.SetActive(true);
-            
+            canGrabPatient = true;
         }
     }
     private void OnTriggerExit(Collider other) {
         if (other = waitingRoomCollider) {
             WRtext.SetActive(false);
-        }
-    }
-    
-    private void OnTriggerStay(Collider other) {
-        if (other = waitingRoomCollider) {
-            if (Input.GetKeyDown(KeyCode.E)) {
-                Debug.Log("hi");
-                gameObject.transform.position = officeSpawn.transform.position;
-                WRtext.SetActive(false);
-            }
+            canGrabPatient = false;
         }
     }
 
