@@ -19,15 +19,14 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.mouseScrollDelta.y < -0.99f) {
-            Debug.Log(selection + "hi");
+        if (Input.mouseScrollDelta.y < -0.99f || Input.GetKeyDown(KeyCode.RightBracket)) {
             if (tools.Length > 1 && selection < tools.Length-1) {
                 tools[selection].SetActive(false);
+                
                 selection++;
                 tools[selection].SetActive(true);
             }
-        } else if (Input.mouseScrollDelta.y > 0.99f) {
-            Debug.Log(selection + "jo");
+        } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
             if (selection != 0) {
                 tools[selection].SetActive(false);
                 selection--;

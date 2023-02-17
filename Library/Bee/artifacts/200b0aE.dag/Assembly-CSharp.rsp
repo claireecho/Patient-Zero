@@ -361,6 +361,7 @@
 "Assets/Scripts/Tools/Clipboard/ClipboardScript.cs"
 "Assets/Scripts/Tools/General/Inventory.cs"
 "Assets/Scripts/Tools/Needle/NeedleScript.cs"
+"Assets/Scripts/Tools/Scalpel/ScalpelScript.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark02.cs"
