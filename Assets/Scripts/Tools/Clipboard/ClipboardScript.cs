@@ -21,14 +21,27 @@ public class ClipboardScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (!isBeingUsed) {
-                transform.position = secondPosition.transform.position;
-                transform.rotation = secondPosition.transform.rotation;
+                setPositionUsed();
                 isBeingUsed = true;
             } else {
-                transform.position = restPosition.transform.position;
-                transform.rotation = restPosition.transform.rotation;
+                setPositionRest();
                 isBeingUsed = false;
             }
         }
+
+    }
+
+    void OnEnable() {
+        setPositionRest();
+        isBeingUsed = false;
+    }
+
+    void setPositionRest() {
+        transform.position = restPosition.transform.position;
+        transform.rotation = restPosition.transform.rotation;
+    }
+    void setPositionUsed() {
+        transform.position = secondPosition.transform.position;
+        transform.rotation = secondPosition.transform.rotation;
     }
 }
