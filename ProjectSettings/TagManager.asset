@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - waitingRoom
+  - currentPatient
   layers:
   - Default
   - TransparentFX
