@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     public BoxCollider waitingRoomCollider;
-    private GameObject WRtext;
+    private GameObject WRtext; // waiting room
     public float jump  = 3f;
     public GameObject officeSpawn;
     private bool canGrabPatient = false;
@@ -53,7 +53,6 @@ public class PlayerMovement : MonoBehaviour
                 WRtext.SetActive(false);
             }
         }
-
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -62,6 +61,7 @@ public class PlayerMovement : MonoBehaviour
             canGrabPatient = true;
         }
     }
+
     private void OnTriggerExit(Collider other) {
         if (other = waitingRoomCollider) {
             WRtext.SetActive(false);

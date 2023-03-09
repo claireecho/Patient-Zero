@@ -6,6 +6,7 @@ TagManager:
   tags:
   - waitingRoom
   - currentPatient
+  - clipboard
   layers:
   - Default
   - TransparentFX
