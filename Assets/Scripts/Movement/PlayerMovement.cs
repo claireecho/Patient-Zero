@@ -13,21 +13,16 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity;
     private bool isGrounded;
     public BoxCollider waitingRoomCollider;
-    public BoxCollider doctorsOfficeCollider;
-    public GameObject WRtext; // waiting room
-    public GameObject DOtext; // doctor's office
+    private GameObject WRtext; // waiting room
     public float jump  = 3f;
     public GameObject officeSpawn;
-    public GameObject hallwaySpawn;
     private bool canGrabPatient = false;
-    private bool canLeaveOffice = false;
-
 
     // Start is called before the first frame update
     void Start()
     {
+        WRtext = GameObject.FindWithTag("waitingRoom");
         WRtext.SetActive(false);
-        DOtext.SetActive(false);
     }
 
     // Update is called once per frame
@@ -58,34 +53,20 @@ public class PlayerMovement : MonoBehaviour
                 WRtext.SetActive(false);
             }
         }
-        if (canLeaveOffice) {
-            if (Input.GetKeyDown(KeyCode.E)) {
-                gameObject.transform.position = hallwaySpawn.transform.position;
-                transform.Rotate(0, 0f, 0);
-                DOtext.SetActive(false);
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("waitingRoom")) {
+        if (other = waitingRoomCollider) {
             WRtext.SetActive(true);
             canGrabPatient = true;
-        }
-        if (other.CompareTag("doctorOffice")) {
-            DOtext.SetActive(true);
-            canLeaveOffice = true;
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        if (other.CompareTag("waitingRoom")) {
+        if (other = waitingRoomCollider) {
             WRtext.SetActive(false);
             canGrabPatient = false;
         }
-        if (other.CompareTag("doctorOffice")) {
-            DOtext.SetActive(false);
-            canLeaveOffice = false;
-        }
     }
+
 }
