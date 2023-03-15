@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641234, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2171,24 +2171,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 24.323792, z: 31.029327}
   m_Center: {x: 0, y: -10.46109, z: 5.2669525}
---- !u!1 &1087268267 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -4321469322830980603, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
-  m_PrefabInstance: {fileID: 347997325}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1087268271
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1087268267}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 16.126493, y: 17.29355, z: 7.2951403}
-  m_Center: {x: -7.0632467, y: -4.528173, z: -4.436304}
 --- !u!1 &1089030291
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,24 +2216,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.29559326, y: 18.692978, z: 19.22284}
   m_Center: {x: -0.35220337, y: -18.274742, z: -92.86435}
---- !u!1 &1093943985 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -7199817038679808949, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
-  m_PrefabInstance: {fileID: 347997325}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1093943989
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1093943985}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 16.126493, y: 17.29355, z: 6.5061703}
-  m_Center: {x: -7.0632467, y: -4.5282016, z: -3.7668917}
 --- !u!1 &1112619701
 GameObject:
   m_ObjectHideFlags: 0
@@ -2492,19 +2456,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.29559326, y: 18.692978, z: 64.19412}
   m_Center: {x: -0.35220337, y: -18.274742, z: -114.40843}
---- !u!65 &1266715272
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148274673623}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2.0000017, y: 2.7380006, z: 0.23901616}
-  m_Center: {x: -0.009099888, y: -0.0043795127, z: 0.040510003}
 --- !u!1 &1298027537 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4373478511992034327, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
@@ -2734,24 +2685,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 38.964905, y: 8.9435425, z: 1}
   m_Center: {x: -13.430267, y: 2.718048, z: 0}
---- !u!1 &1576222479 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -1380878960225285939, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
-  m_PrefabInstance: {fileID: 347997325}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &1576222483
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576222479}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 16.251465, y: 17.29355, z: 10.316916}
-  m_Center: {x: -7.1257324, y: -4.528173, z: -6.1889863}
 --- !u!1 &1622721202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,8 +3296,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 64.636734, y: 84.843575, z: 13.605646}
-  m_Center: {x: -32.052177, y: -5.2049756, z: -6.1351085}
+  m_Size: {x: 64.636734, y: 77.03, z: 14.1}
+  m_Center: {x: -32.052177, y: -8.025644, z: -11.020812}
 --- !u!1 &1849760115
 GameObject:
   m_ObjectHideFlags: 0
@@ -3913,7 +3846,6 @@ GameObject:
   - component: {fileID: 543450652466867565}
   - component: {fileID: 3469287838463484616}
   - component: {fileID: 1711813854668920322}
-  - component: {fileID: 1266715272}
   - component: {fileID: 3469287838463484617}
   m_Layer: 0
   m_Name: clipboard
