@@ -7,6 +7,8 @@ TagManager:
   - waitingRoom
   - currentPatient
   - clipboard
+  - officeRoom
+  - hallwayRoom
   layers:
   - Default
   - TransparentFX
