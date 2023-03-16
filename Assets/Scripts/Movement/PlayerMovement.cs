@@ -12,18 +12,19 @@ public class PlayerMovement : MonoBehaviour
     public float groundDistance = 0.2f;
     private Vector3 velocity;
     private bool isGrounded;
-    public BoxCollider waitingRoomCollider;
     public GameObject WRtext; // waiting room
     public float jump  = 3f;
     public GameObject officeSpawn;
     public static bool canGrabPatient = false;
-    public BoxCollider hallwayRoomCollider;
-    public BoxCollider officeExitColder;
     public GameObject OEtext;
     private bool canLeaveOffice = false;
     public GameObject hallwaySpawn;
     public GameObject Htext;
     private bool canEnterOffice = false;
+    public bool canEnterSurgery = false;
+    public GameObject surgerySpawn;
+    public GameObject Otext;
+    public static bool isOrderOut = false;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
         WRtext.SetActive(false);
         OEtext.SetActive(false);
         Htext.SetActive(false);
+        Otext.SetActive(false);
     }
 
     // Update is called once per frame
@@ -65,8 +67,18 @@ public class PlayerMovement : MonoBehaviour
             } else if (canEnterOffice) {
                 gameObject.transform.position = officeSpawn.transform.position;
                 Htext.SetActive(false);
+            } else if (canEnterSurgery && isOrderOut) {
+                gameObject.transform.position = surgerySpawn.transform.position;
+                Otext.SetActive(false);
             }
         }
+
+        if (canEnterSurgery && isOrderOut) {
+            Otext.SetActive(true);
+        } else {
+            Otext.SetActive(false);
+        }
+
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -79,6 +91,8 @@ public class PlayerMovement : MonoBehaviour
         } else if (other.CompareTag("hallwayRoom")) {
             Htext.SetActive(true);
             canEnterOffice = true;
+        } else if (other.CompareTag("surgeryRoom")) {
+            canEnterSurgery = true;
         }
     }
 
@@ -92,6 +106,8 @@ public class PlayerMovement : MonoBehaviour
         } else if (other.CompareTag("hallwayRoom")) {
             Htext.SetActive(false);
             canEnterOffice = false;
+        } else if (other.CompareTag("surgeryRoom")) {
+            canEnterSurgery = false;
         }
         
     }

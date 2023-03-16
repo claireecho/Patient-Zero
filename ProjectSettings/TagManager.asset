@@ -9,6 +9,8 @@ TagManager:
   - clipboard
   - officeRoom
   - hallwayRoom
+  - description
+  - surgeryRoom
   layers:
   - Default
   - TransparentFX
