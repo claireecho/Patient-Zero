@@ -17,15 +17,16 @@ public class Patient : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (patientMustMove) {
+        if (PlayerMovement.canGrabPatient) {
                 if (patientController.tag == "currentPatient") {
                      if (Input.GetKeyDown(KeyCode.E)) {
                         Debug.Log("hi");
                         gameObject.transform.position = officeSpawn.transform.position;
+                        gameObject.transform.rotation = officeSpawn.transform.rotation;
                         // transform.Rotate(0, 10f, 0);
                     }
                 }
 
         }
-    }
+    }//386.76 293.83 371.62
 }

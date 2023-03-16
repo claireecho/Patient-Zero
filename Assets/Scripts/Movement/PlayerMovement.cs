@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject WRtext; // waiting room
     public float jump  = 3f;
     public GameObject officeSpawn;
-    private bool canGrabPatient = false;
+    public static bool canGrabPatient = false;
     public BoxCollider hallwayRoomCollider;
     public BoxCollider officeExitColder;
     public GameObject OEtext;
