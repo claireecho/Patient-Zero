@@ -622,6 +622,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 24.323792, z: 20.61029}
   m_Center: {x: 0, y: -10.46109, z: -5.5885315}
+--- !u!1 &275039844 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -4891305980613748824, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
+  m_PrefabInstance: {fileID: 347997325}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &275039848
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 275039844}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.189898, y: 23.22607, z: 52.995026}
+  m_Center: {x: -0.014921068, y: 2.346593, z: -2.4176736}
 --- !u!1 &288501132
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,24 +2012,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907916407}
   m_CullTransparentMesh: 1
---- !u!1 &930880497 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2337572096696917250, guid: d73c923a3edff254d800344b5a8ce58b, type: 3}
-  m_PrefabInstance: {fileID: 347997325}
-  m_PrefabAsset: {fileID: 0}
---- !u!65 &930880501
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 930880497}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 4.1898985, y: 23.22607, z: 52.995037}
-  m_Center: {x: 1.9954023, y: -11.491112, z: 25.142199}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -4249,7 +4249,8 @@ MonoBehaviour:
   groundDistance: 0.2
   officeSpawn: {fileID: 372363111}
   hallwaySpawn: {fileID: 138742208}
-  surgerySpawn: {fileID: 1109717746}
+  surgerySpawn: {fileID: 2041309676}
+  postSurgerySpawn: {fileID: 1109717746}
 --- !u!4 &8242637342622029934
 Transform:
   m_ObjectHideFlags: 0

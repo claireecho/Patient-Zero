@@ -23,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
     public static bool isOrderOut = false; // checks if order is out
     private bool canExitSurgery = false; // checks if player is standing in exitSurgery collider
     public static TextMeshProUGUI EText;
+    public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
 
     // Start is called before the first frame update
     void Start()
@@ -62,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
             } else if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
                 gameObject.transform.position = surgerySpawn.transform.position;
             } else if (canExitSurgery) {
-                gameObject.transform.position = hallwaySpawn.transform.position;
+                gameObject.transform.position = postSurgerySpawn.transform.position;
             }
             EText.SetText("");
         }
@@ -78,10 +79,10 @@ public class PlayerMovement : MonoBehaviour
             EText.SetText("Press E to enter office");
             canGrabPatient = true;
         } else if (other.CompareTag("officeRoom")) {
-            EText.SetText("Press E to enter office");
+            EText.SetText("Press E to enter hallway");
             canLeaveOffice = true;
         } else if (other.CompareTag("hallwayRoom")) {
-            EText.SetText("Press E to enter hallway");
+            EText.SetText("Press E to enter office");
             canEnterOffice = true;
         } else if (other.CompareTag("surgeryRoom")) {
             canEnterSurgery = true;
