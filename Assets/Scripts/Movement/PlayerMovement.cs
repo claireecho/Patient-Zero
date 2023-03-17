@@ -1,38 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public float speed = 5f;
-    public Transform groundCheck;
-    public LayerMask groundMask;
-    public float gravity = -9.81f;
-    public float groundDistance = 0.2f;
-    private Vector3 velocity;
-    private bool isGrounded;
-    public GameObject WRtext; // waiting room
-    public float jump  = 3f;
-    public GameObject officeSpawn;
-    public static bool canGrabPatient = false;
-    public GameObject OEtext;
-    private bool canLeaveOffice = false;
-    public GameObject hallwaySpawn;
-    public GameObject Htext;
-    private bool canEnterOffice = false;
-    public bool canEnterSurgery = false;
-    public GameObject surgerySpawn;
-    public GameObject Otext;
-    public static bool isOrderOut = false;
+    public CharacterController controller; // Determines what PLAYER is moving
+    public float speed = 5f; // Determines how fast PLAYER moves
+    public Transform groundCheck; // Determines where PLAYER's ground check is
+    public LayerMask groundMask; // Determines what is considered ground
+    public float gravity = -9.81f; // Determines how fast PLAYER falls (acceleration)
+    public float groundDistance = 0.2f; // Determines how close PLAYER needs to be to the ground to be considered grounded
+    private Vector3 velocity; // Determines how fast PLAYER is moving
+    private bool isGrounded; // Determines if PLAYER is on the ground
+    public GameObject officeSpawn; // where PLAYER will spawn after interacting with waiting room collider / hallway collider
+    public static bool canGrabPatient = false; // checks if player is standing in waiting room collider
+    private bool canLeaveOffice = false; // checks if player is standing in officeExit collider
+    public GameObject hallwaySpawn; // where PLAYER will spawn after interacting with officeExit collider
+    private bool canEnterOffice = false; // checks if player is standing in office collider
+    public static bool canEnterSurgery = false; // checks if player is standing in surgery collider
+    public GameObject surgerySpawn; // where PLAYER will spawn after interacting with surgery collider
+    public static bool isOrderOut = false; // checks if order is out
+    private bool canExitSurgery = false; // checks if player is standing in exitSurgery collider
+    public static TextMeshProUGUI EText;
 
     // Start is called before the first frame update
     void Start()
     {
-        WRtext.SetActive(false);
-        OEtext.SetActive(false);
-        Htext.SetActive(false);
-        Otext.SetActive(false);
+        EText = GameObject.FindWithTag("text").GetComponent<TextMeshProUGUI>();
+        EText.SetText("");
     }
 
     // Update is called once per frame
@@ -57,59 +53,57 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             if (canGrabPatient) {
-                Debug.Log("hi");
                 gameObject.transform.position = officeSpawn.transform.position;
                 transform.Rotate(0, 90f, 0);
-                WRtext.SetActive(false);
             } else if (canLeaveOffice) {
                 gameObject.transform.position = hallwaySpawn.transform.position;
-                OEtext.SetActive(false);
             } else if (canEnterOffice) {
                 gameObject.transform.position = officeSpawn.transform.position;
-                Htext.SetActive(false);
-            } else if (canEnterSurgery && isOrderOut) {
+            } else if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
                 gameObject.transform.position = surgerySpawn.transform.position;
-                Otext.SetActive(false);
+            } else if (canExitSurgery) {
+                gameObject.transform.position = hallwaySpawn.transform.position;
             }
+            EText.SetText("");
         }
 
-        if (canEnterSurgery && isOrderOut) {
-            Otext.SetActive(true);
-        } else {
-            Otext.SetActive(false);
+        if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
+            EText.SetText("Press E to send patient into surgery");
         }
 
     }
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("waitingRoom")) {
-            WRtext.SetActive(true);
+            EText.SetText("Press E to enter office");
             canGrabPatient = true;
         } else if (other.CompareTag("officeRoom")) {
-            OEtext.SetActive(true);
+            EText.SetText("Press E to enter office");
             canLeaveOffice = true;
         } else if (other.CompareTag("hallwayRoom")) {
-            Htext.SetActive(true);
+            EText.SetText("Press E to enter hallway");
             canEnterOffice = true;
         } else if (other.CompareTag("surgeryRoom")) {
             canEnterSurgery = true;
+        } else if (other.CompareTag("postSurgery")) {
+            EText.SetText("Press E to exit surgery");
+            canExitSurgery = true;
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("waitingRoom")) {
-            WRtext.SetActive(false);
             canGrabPatient = false;
         } else if (other.CompareTag("officeRoom")) {
-            OEtext.SetActive(false);
             canLeaveOffice = false;
         } else if (other.CompareTag("hallwayRoom")) {
-            Htext.SetActive(false);
             canEnterOffice = false;
         } else if (other.CompareTag("surgeryRoom")) {
             canEnterSurgery = false;
+        } else if (other.CompareTag("postSurgery")) {
+            canExitSurgery = false;
         }
-        
+        EText.SetText("");
     }
 
 }

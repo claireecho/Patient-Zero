@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
     IEnumerator showDescription() {
 
         description.SetText(tools[selection].name);
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         description.SetText("");
 
     }

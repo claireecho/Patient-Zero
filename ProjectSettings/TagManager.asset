@@ -11,6 +11,8 @@ TagManager:
   - hallwayRoom
   - description
   - surgeryRoom
+  - postSurgery
+  - text
   layers:
   - Default
   - TransparentFX
