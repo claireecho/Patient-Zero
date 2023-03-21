@@ -34,9 +34,12 @@ public class ClipboardScript : MonoBehaviour
     void Start()
     {
         objectiveText = GameObject.FindWithTag("clipboardText").GetComponent<TextMeshProUGUI>();
-        transform.position = restPosition.transform.position;
-        transform.rotation = restPosition.transform.rotation;
-        objectiveText.SetText("");
+        hideClipboard();
+    }
+
+    void OnDisable() {
+        hideClipboard();
+        isBeingUsed = false;
     }
 
     // Update is called once per frame
@@ -52,6 +55,7 @@ public class ClipboardScript : MonoBehaviour
             }
         }
 
+        
     }
 
 
@@ -62,6 +66,7 @@ public class ClipboardScript : MonoBehaviour
 
         // hide text on clipboard
         objectiveText.SetText("");
+        
     }
     void showClipboard() {
         // changes position and rotation of clipboard
@@ -70,5 +75,6 @@ public class ClipboardScript : MonoBehaviour
 
         // show text on clipboard
         objectiveText.SetText("hi");
+        
     }
 }
