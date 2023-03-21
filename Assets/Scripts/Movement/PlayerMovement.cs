@@ -56,16 +56,24 @@ public class PlayerMovement : MonoBehaviour
             if (canGrabPatient) {
                 gameObject.transform.position = officeSpawn.transform.position;
                 transform.Rotate(0, 90f, 0);
+                EText.SetText("");
             } else if (canLeaveOffice) {
                 gameObject.transform.position = hallwaySpawn.transform.position;
+                EText.SetText("");
             } else if (canEnterOffice) {
                 gameObject.transform.position = officeSpawn.transform.position;
+                EText.SetText("");
             } else if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
                 gameObject.transform.position = surgerySpawn.transform.position;
+                EText.SetText("");
             } else if (canExitSurgery) {
-                gameObject.transform.position = postSurgerySpawn.transform.position;
+                // double check if player wants to exit
+                EText.SetText("Are you sure you want to exit surgery? Your progress will be lost if surgery has not been completed. Press E if you wish to exit.");
+                // if (Input.GetKeyDown(KeyCode.E))
+                // { 
+                //     gameObject.transform.position = postSurgerySpawn.transform.position;
+                // }
             }
-            EText.SetText("");
         }
 
         if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
@@ -76,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    // collider for entrances
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("waitingRoom")) {
             EText.SetText("Press E to grab patient");
@@ -94,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    // collider for exits
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("waitingRoom")) {
             canGrabPatient = false;
