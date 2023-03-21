@@ -70,8 +70,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
             EText.SetText("Press E to send patient into surgery");
-        } else if (canEnterSurgery && !isOrderOut) {
-            EText.SetText("");
         }
 
     }
