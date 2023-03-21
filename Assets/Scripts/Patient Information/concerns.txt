@@ -1,0 +1,24 @@
+Headache Needs Pills
+Itchiness Needs Pills
+Pain Right_Foot Needs Cast
+Pain Left_Foot Needs Cast
+Pain Chest Needs Surgery
+Stomachache Needs Pills
+Pain Stab_Wound Needs Surgery
+Food_Poisoning Needs Pills
+
+Burst_Apendex Needs Surgery
+Diabetes Needs Insulin
+Chicken_Pox Needs Pills
+Appendicitis Needs Surgery
+Muscle_Pain Needs Pills
+Sinusitis_Infection Needs Pills
+Urinary_Tract_Infection Needs Pills
+Diphtheria Needs Pills
+Flu Needs Pills
+Rheumatoid_Arthritis Needs Pills
+Gallstones Needs Surgery
+Hernia Needs Surgery
+Fractured_Radius Needs Cast
+Broken_Tibia Needs Cast
+Broken_Metatarsal Needs Cast
