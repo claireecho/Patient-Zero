@@ -8,7 +8,7 @@ public class Inventory : MonoBehaviour
 {
     public GameObject[] tools = new GameObject[0];
     private int selection = 0;
-    public TextMeshProUGUI description;
+    public TextMeshProUGUI description; 
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +24,15 @@ public class Inventory : MonoBehaviour
     {
         if (Input.mouseScrollDelta.y < -0.99f || Input.GetKeyDown(KeyCode.RightBracket)) {
             if (tools.Length > 1 && selection < tools.Length-1) {
+                
                 StopCoroutine("showDescription");
                 tools[selection].SetActive(false);
                 
                 selection++;
                 tools[selection].SetActive(true);
                 StartCoroutine("showDescription");
-                ClipboardScript.objectiveText.SetText(selection == 0 ? "hi" : "");
-                
+
+
             }
         } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
             if (selection != 0) {
@@ -40,7 +41,6 @@ public class Inventory : MonoBehaviour
                 selection--;
                 tools[selection].SetActive(true);
                 StartCoroutine("showDescription");
-                ClipboardScript.objectiveText.SetText(selection == 0 ? "hi" : "");
             }
         }
 
