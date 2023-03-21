@@ -7,6 +7,12 @@ TagManager:
   - waitingRoom
   - currentPatient
   - clipboard
+  - officeRoom
+  - hallwayRoom
+  - description
+  - surgeryRoom
+  - postSurgery
+  - text
   layers:
   - Default
   - TransparentFX
