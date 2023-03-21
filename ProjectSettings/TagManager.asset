@@ -13,6 +13,7 @@ TagManager:
   - surgeryRoom
   - postSurgery
   - text
+  - clipboardText
   layers:
   - Default
   - TransparentFX

@@ -30,7 +30,7 @@ public class Inventory : MonoBehaviour
                 selection++;
                 tools[selection].SetActive(true);
                 StartCoroutine("showDescription");
-
+                ClipboardScript.objectiveText.SetText(selection == 0 ? "hi" : "");
                 
             }
         } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour
                 selection--;
                 tools[selection].SetActive(true);
                 StartCoroutine("showDescription");
+                ClipboardScript.objectiveText.SetText(selection == 0 ? "hi" : "");
             }
         }
 
