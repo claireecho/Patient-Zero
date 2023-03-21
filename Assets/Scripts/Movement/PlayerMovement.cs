@@ -76,7 +76,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("waitingRoom")) {
-            EText.SetText("Press E to enter office");
+            EText.SetText("Press E to grab patient");
             canGrabPatient = true;
         } else if (other.CompareTag("officeRoom")) {
             EText.SetText("Press E to enter hallway");
