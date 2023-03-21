@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool canExitSurgery = false; // checks if player is standing in exitSurgery collider
     public static TextMeshProUGUI EText;
     public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
+    private bool canConfirmExit = false; // checks if player can confirm exit
 
     // Start is called before the first frame update
     void Start()
@@ -68,12 +69,16 @@ public class PlayerMovement : MonoBehaviour
                 EText.SetText("");
             } else if (canExitSurgery) {
                 // double check if player wants to exit
-                EText.SetText("Are you sure you want to exit surgery? Your progress will be lost if surgery has not been completed. Press E if you wish to exit.");
-                // if (Input.GetKeyDown(KeyCode.E))
-                // { 
-                //     gameObject.transform.position = postSurgerySpawn.transform.position;
-                // }
+                EText.SetText("Are you sure you want to exit surgery? Your progress will be lost if surgery has not been completed. (Y/N)");
+                canConfirmExit = true;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) { // for when you want to leave surgery
+            gameObject.transform.position = postSurgerySpawn.transform.position;
+            EText.SetText("");
+        } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
+            EText.SetText("");
         }
 
         if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
@@ -83,6 +88,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
     }
+
 
     // collider for entrances
     private void OnTriggerEnter(Collider other) {
