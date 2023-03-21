@@ -2075,7 +2075,7 @@ GameObject:
   - component: {fileID: 907916409}
   m_Layer: 5
   m_Name: clipboardText
-  m_TagString: Untagged
+  m_TagString: clipboardText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4206,7 +4206,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restPosition: {fileID: 1805286999}
   secondPosition: {fileID: 75913252}
-  objectiveText: {fileID: 907916407}
 --- !u!1 &8242637341495582028
 GameObject:
   m_ObjectHideFlags: 0
