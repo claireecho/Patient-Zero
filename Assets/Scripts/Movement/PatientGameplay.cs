@@ -24,6 +24,49 @@ public class PatientGameplay : MonoBehaviour
     {
     }
 
+    int firstNameIndex = 0; // temporary variable to store index of first name --> replaced later
+    int concernIndex = 0; // temporary variable to store index of concern --> replaced later
+
+    // assigns random first name to patient
+    public string getFirstName()
+    {
+        firstNameIndex = Random.Range(0, firstNames.Length);
+        int spaceIndex = firstNames[firstNameIndex].IndexOf(" ");
+        return firstNames[firstNameIndex].Substring(0, spaceIndex);
+    }
+    
+    // assigns gender to patient
+    // MUST CALL getSex() AFTER getFirstName() so that firstNameIndex is assigned correctly
+    public string getSex()
+    {
+        int spaceIndex = firstNames[firstNameIndex].IndexOf(" ");
+        return firstNames[firstNameIndex].Substring(spaceIndex + 1);
+    }
+
+    // assigns random last name to patient
+    public string getLastName()
+    {
+        int index = Random.Range(0, lastNames.Length);
+        return lastNames[index];
+    }
+
+    // assigns random concern to patient
+    public string getConcern()
+    {
+        int concernIndex = Random.Range(0, concerns.Length);
+        int spaceIndex = concerns[concernIndex].IndexOf(" ");
+        return concerns[concernIndex].Substring(0, spaceIndex);
+    }
+
+    // assigns remedy to patient
+    // MUST CALL getRemedy() AFTER getConcern() so that concernIndex is assigned correctly
+    public string getRemedy()
+    {
+        int spaceIndex = concerns[concernIndex].IndexOf(" ");
+        return concerns[concernIndex].Substring(spaceIndex + 1);
+    }
+
+
     // reads first name text file and adds to array
     void readFirstNameTextFile(string file_path)
     {

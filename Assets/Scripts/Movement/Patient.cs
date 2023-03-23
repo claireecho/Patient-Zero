@@ -8,6 +8,7 @@ public class Patient : MonoBehaviour
     public GameObject officeSpawn;
     public GameObject surgerySpawn;
     public static bool isCurrentPatient = false;
+    private PatientGameplay patientGameplay;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,12 @@ public class Patient : MonoBehaviour
     void Update()
     {
         if (patientController.tag == "currentPatient") {
+                string firstName = patientGameplay.getFirstName();
+                string sex = patientGameplay.getSex();
+                string lastName = patientGameplay.getLastName();
+                string concern = patientGameplay.getConcern();
+                string remedy = patientGameplay.getRemedy();
+
                 if (Input.GetKeyDown(KeyCode.E)) {
                      if (PlayerMovement.canGrabPatient) {
                         isCurrentPatient = true;
@@ -32,5 +39,7 @@ public class Patient : MonoBehaviour
                 }
 
         }
-    }//386.76 293.83 371.62
+    }
+    
+    //386.76 293.83 371.62
 }
