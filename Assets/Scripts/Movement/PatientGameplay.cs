@@ -6,7 +6,6 @@ using System.IO;
 public class PatientGameplay : MonoBehaviour
 {
     private Patient patient;
-    public 
     private string[] lastNames;
     private string[] firstNames;
     private string[] concerns;
@@ -18,20 +17,51 @@ public class PatientGameplay : MonoBehaviour
     }
 
     // Update is called once per frame
+    // may need to change path if files change location depending on user
     void Update()
     {
-        ReadString();
+        readFirstNameTextFile(@"C:\Users\emily\Desktop\files\cs\capstone project\ComputerSystem\Assets\Scripts\Patient Information\firstNames.txt");
+        readLastNameTextFile(@"C:\Users\emily\Desktop\files\cs\capstone project\ComputerSystem\Assets\Scripts\Patient Information\lastNames.txt");
+        readConcernTextFile(@"C:\Users\emily\Desktop\files\cs\capstone project\ComputerSystem\Assets\Scripts\Patient Information\concerns.txt");
     }
 
-    // read text file at runtime 
-    //[MenuItem("Tools/Write file")]
-    static void ReadString()
+    // reads first name text file and assigns randome first name to patient
+    void readFirstNameTextFile(string file_path)
     {
-        string path =  "Assets/Scripts/Patient\ Information/firstNames.txt";
-        // Read the text from directly from the txt file
-        StreamReader reader = new StreamReader(path);
-        Debug.Log(reader.ReadToEnd());
-        reader.Close();
+        StreamReader inp_stm = new StreamReader(file_path);
+        while(!inp_stm.EndOfStream)
+        {
+            string inp_ln = inp_stm.ReadLine( );
+            Debug.Log(inp_ln);
+            // Do Something with the input. 
+        }
+        inp_stm.Close( );  
     }
 
+    // reads last name text file and assigns random last name to patient
+    void readLastNameTextFile(string file_path)
+    {
+        StreamReader inp_stm = new StreamReader(file_path);
+        while(!inp_stm.EndOfStream)
+        {
+            string inp_ln = inp_stm.ReadLine( );
+            Debug.Log(inp_ln);
+            // Do Something with the input. 
+        }
+        inp_stm.Close( );  
+    }
+
+    // reads concerns text file and assigns random concern to patient
+    void readConcernTextFile(string file_path)
+    {
+        StreamReader inp_stm = new StreamReader(file_path);
+        while(!inp_stm.EndOfStream)
+        {
+            string inp_ln = inp_stm.ReadLine( );
+            Debug.Log(inp_ln);
+            // Do Something with the input. 
+        }
+        inp_stm.Close( );  
+    }
+    
 }
