@@ -2776,6 +2776,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ccaa63516ae33649a757b7ee217a76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  officeSpawn: {fileID: 869391644}
+  surgerySpawn: {fileID: 496639537}
 --- !u!1 &1116861240
 GameObject:
   m_ObjectHideFlags: 0
