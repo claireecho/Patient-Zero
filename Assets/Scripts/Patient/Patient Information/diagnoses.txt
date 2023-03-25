@@ -1,0 +1,14 @@
+Appendicitis 5
+Gallstones 5
+Hernia 5
+Clogged Arteries 5
+ACL Tear 5
+Chicken Pox 5
+Muscle Pain 3
+Sinus Infection 5
+Urinary Tract Infection 4
+Yeast Infection 5
+Diptheria 5
+Flu 5
+Rheumatoid Arthritis 5
+Diabetes 5

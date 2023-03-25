@@ -29,11 +29,13 @@ public class ClipboardScript : MonoBehaviour
     public GameObject secondPosition;
     private bool isBeingUsed = false;
     public static TextMeshProUGUI objectiveText;
+    private static TextMeshProUGUI titleText;
 
     // Start is called before the first frame update
     void Start()
     {
         objectiveText = GameObject.FindWithTag("clipboardText").GetComponent<TextMeshProUGUI>();
+        titleText = GameObject.FindWithTag("clipboardTitle").GetComponent<TextMeshProUGUI>();
         hideClipboard();
     }
 
@@ -66,6 +68,7 @@ public class ClipboardScript : MonoBehaviour
 
         // hide text on clipboard
         objectiveText.SetText("");
+        titleText.SetText("");
         
     }
     void showClipboard() {
@@ -74,7 +77,8 @@ public class ClipboardScript : MonoBehaviour
         transform.rotation = secondPosition.transform.rotation;
 
         // show text on clipboard
-        objectiveText.SetText("hi");
+        objectiveText.SetText(PatientGameplay.patient.toString());
+        titleText.SetText("Patient Information");
         
     }
 }

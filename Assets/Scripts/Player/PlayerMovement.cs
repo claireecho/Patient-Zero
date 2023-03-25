@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public static TextMeshProUGUI EText;
     public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
     private bool canConfirmExit = false; // checks if player can confirm exit
+    public static bool grabbedPatient = false; // checks if player has grabbed patient
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             if (canGrabPatient) {
+                grabbedPatient = true;
                 gameObject.transform.position = officeSpawn.transform.position;
                 transform.Rotate(0, 90f, 0);
                 EText.SetText("");
@@ -64,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
             } else if (canEnterOffice) {
                 gameObject.transform.position = officeSpawn.transform.position;
                 EText.SetText("");
-            } else if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
+            } else if (canEnterSurgery && isOrderOut && PatientGameplay.isCurrentPatient) { //  && Patient.isCurrentPatient
                 gameObject.transform.position = surgerySpawn.transform.position;
                 EText.SetText("");
             } else if (canExitSurgery) {
@@ -81,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
             EText.SetText("");
         }
 
-        if (canEnterSurgery && isOrderOut && Patient.isCurrentPatient) {
+        if (canEnterSurgery && isOrderOut && PatientGameplay.isCurrentPatient) { //  && Patient.isCurrentPatient
             EText.SetText("Press E to send patient into surgery");
         } else if (canEnterSurgery && !isOrderOut) {
             EText.SetText("");
