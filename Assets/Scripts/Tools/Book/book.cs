@@ -79,9 +79,15 @@ public class book : MonoBehaviour
         leftText.SetText("");
         rightText.SetText("");
         CameraLook.isPaused = false;
-        translucent.SetActive(false);
-        backButtonObject.SetActive(false);
-        forwardButtonObject.SetActive(false);
+        if (translucent != null) {
+            translucent.SetActive(false);
+        }
+        if (backButtonObject != null) {
+            backButtonObject.SetActive(false);
+        }
+        if (forwardButtonObject != null) {
+            forwardButtonObject.SetActive(false);
+        }
         
     }
     void showBook() {
@@ -91,7 +97,9 @@ public class book : MonoBehaviour
         setPosition(bookClosed, hidePosition);
         leftText.SetText(PatientGameplay.toString(numberOfDOnPage, 1));
         rightText.SetText(PatientGameplay.toString(numberOfDOnPage, 2));
-        translucent.SetActive(true);
+        if (translucent != null) {
+            translucent.SetActive(true);
+        }
         backButtonObject.SetActive(true);
         forwardButtonObject.SetActive(true);
         
