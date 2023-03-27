@@ -6,12 +6,12 @@ using System.IO;
 public class PatientGameplay : MonoBehaviour
 {
     public static Patient patient;
-    private string[] lastNames;
-    private string[] firstNames;
-    private string[] sexes;
-    private string[] diagnoses;
-    private string[] concerns;
-    private string[] treatments;
+    public static string[] lastNames;
+    public static string[] firstNames;
+    public static string[] sexes;
+    public static string[] diagnoses;
+    public static string[] concerns;
+    public static string[] treatments;
     public GameObject officeSpawn;
     public GameObject surgerySpawn;
     public static bool isCurrentPatient = false;
@@ -38,10 +38,11 @@ public class PatientGameplay : MonoBehaviour
         for (int i = 0; i < diagnoses.Length; i++)
         {
             for (int j = 0; j < int.Parse(diagnoses[i].Substring(diagnoses[i].Length-1)); j++)
-            {
+            {                
                 concerns[i] += temp[index] + "\n";
                 index++;
             }
+            diagnoses[i] = diagnoses[i].Substring(0, diagnoses[i].Length-2);
         }
         treatments = File.ReadAllLines("Assets/Scripts/Patient/Patient Information/treatments.txt");
 
@@ -92,5 +93,25 @@ public class PatientGameplay : MonoBehaviour
         }
         inp_stm.Close( );  
     }
+
+    public static string toString(int x, int y) { // x is number of texts, y is page number
+        string temp = "";
+        for (int i = x * (y - 1); i < (x * (y - 1) + x < diagnoses.Length ? x * (y - 1) + x : diagnoses.Length); i++) {
+            string[] cTemp = concerns[i].Split('\n');
+            string CTemp = "";
+            foreach (string j in cTemp) {
+                if (j != "") 
+                    CTemp += "  - " + j + "\n";
+            }
+            temp += "Sickness: " + diagnoses[i] + "\n" +
+                    "Symptoms: \n" + CTemp +
+                    "Treatment: " + treatments[i] + "\n\n";
+            // Sickness: Chicken Pox
+            // Symptoms: Itching, Fever, Rash
+            // Treatment: Rest, Medicine
+        }
+        return temp;
+    }
+    
 
 }

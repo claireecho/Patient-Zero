@@ -41,10 +41,12 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         // Movement
-        float moveLR = Input.GetAxis("Horizontal");
-        float moveFB = Input.GetAxis("Vertical");
-        Vector3 move = transform.right * moveLR + transform.forward * moveFB;
-        controller.Move(move * speed * Time.deltaTime);
+        if (CameraLook.isPaused == false) {
+            float moveLR = Input.GetAxis("Horizontal");
+            float moveFB = Input.GetAxis("Vertical");
+            Vector3 move = transform.right * moveLR + transform.forward * moveFB;
+            controller.Move(move * speed * Time.deltaTime);
+        }
 
         // Gravity Pt. 2
         if (!isGrounded) {
