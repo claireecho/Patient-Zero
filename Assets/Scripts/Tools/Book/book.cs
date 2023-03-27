@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class book : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class book : MonoBehaviour
     public GameObject bookOpen;
     public GameObject bookClosed;
     public GameObject hidePosition;
+    public TextMeshProUGUI leftText;
+    public TextMeshProUGUI rightText;
     private bool isOpen = false;
 
     void OnDisable() {
@@ -40,12 +43,15 @@ public class book : MonoBehaviour
         
         setPosition(bookOpen, hidePosition);
         setPosition(bookClosed, closedPosition);
+        leftText.SetText("");
+        rightText.SetText("");
         
     }
     void showBook() {
         
         setPosition(bookOpen, openPosition);
         setPosition(bookClosed, hidePosition);
+        leftText.SetText("");
         
     }
 

@@ -2078,7 +2078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 7ea25a8bc6bc3f24984eb71d4c70fb77, type: 3}
       propertyPath: m_Name
-      value: diagnosesBookClosed
+      value: Book of Diagnoses
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ea25a8bc6bc3f24984eb71d4c70fb77, type: 3}
@@ -2521,6 +2521,8 @@ MonoBehaviour:
   bookOpen: {fileID: 328148902}
   bookClosed: {fileID: 877214734}
   hidePosition: {fileID: 610049856}
+  leftText: {fileID: 34425755}
+  rightText: {fileID: 512207381}
 --- !u!1 &883331382
 GameObject:
   m_ObjectHideFlags: 0
