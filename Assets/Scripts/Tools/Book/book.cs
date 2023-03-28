@@ -19,8 +19,8 @@ public class book : MonoBehaviour
     public GameObject forwardButtonObject;
     public Button backButton;
     public Button forwardButton;
-    private int[] page = {1, 2};
-    private int numberOfDOnPage = 4;
+    private int page = 2;
+    [SerializeField] private int numberOfDOnPage = 4;
 
     void OnDisable() {
         hideBook();
@@ -36,26 +36,12 @@ public class book : MonoBehaviour
         
     }
 
-    private void forward() {
-        page[0] += 2;
-        page[1] += 2;
-        if (page[1] > PatientGameplay.diagnoses.Length / numberOfDOnPage + 1) {
-            page[0] -= 2;
-            page[1] -= 2;
-        }
-        leftText.SetText(PatientGameplay.toString(numberOfDOnPage, page[0]));
-        rightText.SetText(PatientGameplay.toString(numberOfDOnPage, page[1]));
+    private void forward() { // next page of diagnoses book
+        // this is confusing the shit out of me and it's late so do tmrw
     }
 
-    private void back() {
-        page[0] -= 2;
-        page[1] -= 2;
-        if (page[0] < 1) {
-            page[0] += 2;
-            page[1] += 2;
-        }
-        leftText.SetText(PatientGameplay.toString(numberOfDOnPage, page[0]));
-        rightText.SetText(PatientGameplay.toString(numberOfDOnPage, page[1]));
+    private void back() { // previous page of diagnoses book
+        // this is confusing the shit out of me and it's late so do tmrw
     }
 
     // Update is called once per frame
