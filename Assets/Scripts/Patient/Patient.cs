@@ -65,11 +65,19 @@ public class Patient {
     }
 
     public string toString() {
-        return (
+        string temp = 
             "Name: " + firstName + " " + lastName + "\n" +
             "Sex: " + sex + "\n" +
-            "Symptoms: " + "\n" + concern + "\n"
-        );
+            "Symptoms: " + "\n";
+        foreach (string j in concern.Split("\n")) {
+            if (j != "") {
+                temp += "  - " + j;
+            }
+            if (j != concern.Split("\n")[concern.Split("\n").Length - 1]) {
+                temp += "\n";
+            }
+        }
+        return temp;
     }
 
 }

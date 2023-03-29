@@ -46,6 +46,8 @@ public class PatientGameplay : MonoBehaviour
         }
         treatments = File.ReadAllLines("Assets/Scripts/Patient/Patient Information/treatments.txt");
 
+        book.maxPage = diagnoses.Length / book.numberOfDOnPage + (diagnoses.Length % book.numberOfDOnPage == 0 ? 0 : 1);
+
     }
 
     // Update is called once per frame
