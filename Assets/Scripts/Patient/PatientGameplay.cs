@@ -45,6 +45,13 @@ public class PatientGameplay : MonoBehaviour
             diagnoses[i] = diagnoses[i].Substring(0, diagnoses[i].Length-2);
         }
         treatments = File.ReadAllLines("Assets/Scripts/Patient/Patient Information/treatments.txt");
+        Website.antibiotics = new List<string>();
+        for (int i = 0; i < diagnoses.Length; i++)
+        {
+            if (treatments[i] == "Antibiotics") {
+                Website.antibiotics.Add(diagnoses[i]);
+            }
+        }
 
         book.maxPage = diagnoses.Length / book.numberOfDOnPage + (diagnoses.Length % book.numberOfDOnPage == 0 ? 0 : 1);
 

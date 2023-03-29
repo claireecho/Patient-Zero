@@ -22,25 +22,27 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.mouseScrollDelta.y < -0.99f || Input.GetKeyDown(KeyCode.RightBracket)) {
-            if (tools.Length > 1 && selection < tools.Length-1) {
-                
-                StopCoroutine("showDescription");
-                tools[selection].SetActive(false);
-                
-                selection++;
-                tools[selection].SetActive(true);
-                StartCoroutine("showDescription");
+        if (!CameraLook.isPaused) {
+            if (Input.mouseScrollDelta.y < -0.99f || Input.GetKeyDown(KeyCode.RightBracket)) {
+                if (tools.Length > 1 && selection < tools.Length-1) {
+                    
+                    StopCoroutine("showDescription");
+                    tools[selection].SetActive(false);
+                    
+                    selection++;
+                    tools[selection].SetActive(true);
+                    StartCoroutine("showDescription");
 
 
-            }
-        } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
-            if (selection != 0) {
-                StopCoroutine("showDescription");
-                tools[selection].SetActive(false);
-                selection--;
-                tools[selection].SetActive(true);
-                StartCoroutine("showDescription");
+                }
+            } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
+                if (selection != 0) {
+                    StopCoroutine("showDescription");
+                    tools[selection].SetActive(false);
+                    selection--;
+                    tools[selection].SetActive(true);
+                    StartCoroutine("showDescription");
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.E)) {
