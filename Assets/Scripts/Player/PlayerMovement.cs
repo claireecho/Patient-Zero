@@ -27,12 +27,14 @@ public class PlayerMovement : MonoBehaviour
     private bool canConfirmExit = false; // checks if player can confirm exit
     public static bool grabbedPatient = false; // checks if player has grabbed patient
     public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
+    public GameObject pharmacyWebsite; // website for pharmacy
 
     // Start is called before the first frame update
     void Start()
     {
         EText = GameObject.FindWithTag("text").GetComponent<TextMeshProUGUI>();
         EText.SetText("");
+        pharmacyWebsite.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,6 +78,9 @@ public class PlayerMovement : MonoBehaviour
                 // double check if player wants to exit
                 EText.SetText("Are you sure you want to exit surgery? Your progress will be lost if surgery has not been completed. (Y/N)");
                 canConfirmExit = true;
+            } else if (canUsePharmacy) {
+                pharmacyWebsite.SetActive(true);
+                EText.SetText("");
             }
         }
 

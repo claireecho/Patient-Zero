@@ -43,7 +43,13 @@ public class Inventory : MonoBehaviour
                 StartCoroutine("showDescription");
             }
         }
-
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (PlayerMovement.canUsePharmacy) {
+                tools[selection].SetActive(false);
+            } else if (!PlayerMovement.canUsePharmacy) {
+                tools[selection].SetActive(true);
+            }
+        }
     }
 
     void FixedUpdate() {

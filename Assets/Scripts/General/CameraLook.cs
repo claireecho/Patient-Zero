@@ -36,5 +36,10 @@ public class CameraLook : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (PlayerMovement.canUsePharmacy) {
+                    isPaused = true;
+            }
+        }
     }
 }
