@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
     private bool canConfirmExit = false; // checks if player can confirm exit
     public static bool grabbedPatient = false; // checks if player has grabbed patient
+    public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
 
     // Start is called before the first frame update
     void Start()
@@ -110,6 +111,9 @@ public class PlayerMovement : MonoBehaviour
         } else if (other.CompareTag("postSurgery")) {
             EText.SetText("Press E to exit surgery");
             canExitSurgery = true;
+        } else if (other.CompareTag("pharmacy")) {
+            EText.SetText("Press E to access pharmacy supply");
+            canUsePharmacy = true;
         }
     }
 
@@ -125,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             canEnterSurgery = false;
         } else if (other.CompareTag("postSurgery")) {
             canExitSurgery = false;
+        } else if (other.CompareTag("pharmacy")) {
+            canUsePharmacy = false;
         }
         EText.SetText("");
     }

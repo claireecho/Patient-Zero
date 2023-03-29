@@ -17,6 +17,7 @@ TagManager:
   - clipboardTitle
   - backButton
   - fowardButton
+  - pharmacy
   layers:
   - Default
   - TransparentFX
