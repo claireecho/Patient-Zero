@@ -27,7 +27,7 @@ public class ClipboardScript : MonoBehaviour
 
     public GameObject restPosition;
     public GameObject secondPosition;
-    private bool isBeingUsed = false;
+    public static bool isBeingUsed = false;
     public static TextMeshProUGUI objectiveText;
     private static TextMeshProUGUI titleText;
 
@@ -41,7 +41,6 @@ public class ClipboardScript : MonoBehaviour
 
     void OnDisable() {
         hideClipboard();
-        isBeingUsed = false;
     }
 
     // Update is called once per frame
@@ -50,10 +49,14 @@ public class ClipboardScript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (!isBeingUsed) {
                 showClipboard();
-                isBeingUsed = true;
             } else {
                 hideClipboard();
-                isBeingUsed = false;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            if (isBeingUsed) {
+                hideClipboard();
             }
         }
 
@@ -69,6 +72,8 @@ public class ClipboardScript : MonoBehaviour
         // hide text on clipboard
         objectiveText.SetText("");
         titleText.SetText("");
+
+        isBeingUsed = false;
         
     }
     void showClipboard() {
@@ -80,5 +85,6 @@ public class ClipboardScript : MonoBehaviour
         objectiveText.SetText(PatientGameplay.patient.toString());
         titleText.SetText("Patient Information");
         
+        isBeingUsed = true;
     }
 }
