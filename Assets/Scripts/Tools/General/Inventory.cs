@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public GameObject[] tools = new GameObject[0];
     private int selection = 0;
     public TextMeshProUGUI description; 
+    public GameObject drug;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,6 +53,15 @@ public class Inventory : MonoBehaviour
                 tools[selection].SetActive(true);
             }
         }
+
+        void onMouseDown() {
+            foreach (string i in Website.antibiotics) {
+                if (Website.grabbedAntibiotic == i) {
+                    Instantiate(drug, transform);
+                }
+            }
+        }
+
     }
 
     void FixedUpdate() {
