@@ -7,9 +7,11 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject[] tools = new GameObject[0];
+    public static GameObject[] globalTools;
     public static GameObject[] inventory;
     public static int selection = 0;
     public TextMeshProUGUI description; 
+    public static bool inventorySwitch = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,7 @@ public class Inventory : MonoBehaviour
         }
         inventory[selection].SetActive(true);
         StartCoroutine("showDescription");
+        globalTools = tools;
     }
 
     // Update is called once per frame
@@ -36,6 +39,10 @@ public class Inventory : MonoBehaviour
                     inventory[selection].SetActive(true);
                     StartCoroutine("showDescription");
 
+                    if (TrashScript.canConfirmTrash) {
+                        inventorySwitch = true;
+                    }
+
 
                 }
             } else if (Input.mouseScrollDelta.y > 0.99f || Input.GetKeyDown(KeyCode.LeftBracket)) {
@@ -45,6 +52,9 @@ public class Inventory : MonoBehaviour
                     selection--;
                     inventory[selection].SetActive(true);
                     StartCoroutine("showDescription");
+                    if (TrashScript.canConfirmTrash) {
+                        inventorySwitch = true;
+                    }
                 }
             }
         }
@@ -63,6 +73,17 @@ public class Inventory : MonoBehaviour
             PlayerMovement.isOrderOut = false;
         } else {
             PlayerMovement.isOrderOut = true;
+        }
+        if (TrashScript.canTrashStill) {
+            foreach (GameObject i in globalTools) {
+                TrashScript.canConfirmTrash = true;
+                if (inventory[selection].name == i.name) {
+                    TrashScript.canConfirmTrash = false;
+                    break;
+                }
+            }
+            if (TrashScript.canConfirmTrash)
+                PlayerMovement.EText.SetText("Press E to throw away " + inventory[selection].name);
         }
     }
 

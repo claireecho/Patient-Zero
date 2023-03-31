@@ -18,6 +18,7 @@ TagManager:
   - backButton
   - fowardButton
   - pharmacy
+  - trash
   layers:
   - Default
   - TransparentFX

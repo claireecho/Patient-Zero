@@ -77,6 +77,7 @@ public class PlayerMovement : MonoBehaviour
             } else if (canExitSurgery) {
                 // double check if player wants to exit
                 EText.SetText("Are you sure you want to exit surgery? Your progress will be lost if surgery has not been completed. (Y/N)");
+                EText.color = TrashScript.red;
                 canConfirmExit = true;
             } else if (canUsePharmacy) {
                 pharmacyWebsite.SetActive(true);
@@ -92,8 +93,12 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) { // for when you want to leave surgery
             gameObject.transform.position = postSurgerySpawn.transform.position;
             EText.SetText("");
+            canConfirmExit = false;
+            EText.color = Color.black;
         } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
             EText.SetText("");
+            canConfirmExit = false;
+            EText.color = Color.black;
         }
 
         if (canEnterSurgery && isOrderOut && PatientGameplay.isCurrentPatient) { //  && Patient.isCurrentPatient
@@ -107,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
 
     // collider for entrances
     private void OnTriggerEnter(Collider other) {
+        EText.color = Color.black;
         if (other.CompareTag("waitingRoom")) {
             EText.SetText("Press E to grab patient");
             canGrabPatient = true;
