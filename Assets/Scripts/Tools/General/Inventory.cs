@@ -6,10 +6,11 @@ using TMPro;
 
 public class Inventory : MonoBehaviour
 {
-    public GameObject[] tools = new GameObject[0];
+    [SerializeField] private GameObject[] tools = new GameObject[0];
     private int selection = 0;
     public TextMeshProUGUI description; 
     public GameObject drug;
+    public Transform toolHeader;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +58,15 @@ public class Inventory : MonoBehaviour
         void onMouseDown() {
             foreach (string i in Website.antibiotics) {
                 if (Website.grabbedAntibiotic == i) {
-                    Instantiate(drug, transform);
+                    GameObject[] newTools = new GameObject[tools.Length+1];
+                    for (int j = 0; j < tools.Length; j++) {
+                        newTools[j] = tools[j];
+                    }
+                    newTools[tools.Length] = Instantiate(drug, transform);
+                    Debug.Log(newTools[tools.Length].name);
+                    newTools[tools.Length].SetActive(false);
+                    tools = new GameObject[newTools.Length];
+                    tools = newTools;
                 }
             }
         }
