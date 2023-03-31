@@ -12,6 +12,9 @@ public class Website : MonoBehaviour
     public Transform grid;
     private bool isAntibioticsLoaded = false;
     public static string grabbedAntibiotic;
+    public static bool leftWebsite = false;
+    public GameObject drug;
+    public Transform toolHeader;
 
     // Start is called before the first frame update
     void Start()
@@ -36,5 +39,24 @@ public class Website : MonoBehaviour
     }
     private void sendAntibiotic(GameObject g) {
         grabbedAntibiotic = g.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text;
+        leftWebsite = true;
+        CameraLook.isPaused = false;
+        foreach (string i in antibiotics) {
+                if (grabbedAntibiotic == i) {
+                    GameObject[] newTools = new GameObject[Inventory.inventory.Length+1];
+                    for (int j = 0; j < Inventory.inventory.Length; j++) {
+                        newTools[j] = Inventory.inventory[j];
+                    }
+                    newTools[Inventory.inventory.Length] = Instantiate(drug, transform);
+                    newTools[Inventory.inventory.Length].transform.SetParent(toolHeader, false);
+                    newTools[Inventory.inventory.Length].name = grabbedAntibiotic + " Antibiotic";
+                    newTools[Inventory.inventory.Length].SetActive(false);
+                    Inventory.inventory = new GameObject[newTools.Length];
+                    Inventory.inventory = newTools;
+                    Inventory.inventory[Inventory.selection].SetActive(true);
+                    Debug.Log("Success!");
+                    Website.grabbedAntibiotic = "";
+                }
+            }
     }
 }

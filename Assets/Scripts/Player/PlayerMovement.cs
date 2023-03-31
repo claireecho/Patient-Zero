@@ -84,6 +84,11 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (Website.leftWebsite) {
+            pharmacyWebsite.SetActive(false);
+            Website.leftWebsite = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) { // for when you want to leave surgery
             gameObject.transform.position = postSurgerySpawn.transform.position;
             EText.SetText("");

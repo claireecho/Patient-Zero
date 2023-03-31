@@ -896,8 +896,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 19.895449, y: 22.711744, z: 25.408834}
-  m_Center: {x: -1.2039368, y: -10.855871, z: -12.204414}
+  m_Size: {x: 16.014769, y: 22.711744, z: 25.408834}
+  m_Center: {x: -1.44518, y: -10.855872, z: -12.204414}
 --- !u!1 &237432509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4408,6 +4408,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 7169710516691044221, guid: 69862f24bcc8d4444a23191cd62d9f2c, type: 3}
   grid: {fileID: 261831611}
+  drug: {fileID: 785041230841479460, guid: 28a7ca97b7fe4724fa2deea43b097355, type: 3}
+  toolHeader: {fileID: 76670812}
 --- !u!1 &1225915159
 GameObject:
   m_ObjectHideFlags: 0
@@ -6691,8 +6693,6 @@ MonoBehaviour:
   - {fileID: 1248736172}
   - {fileID: 877214734}
   description: {fileID: 382203121}
-  drug: {fileID: 7169710516691044221, guid: 69862f24bcc8d4444a23191cd62d9f2c, type: 3}
-  toolHeader: {fileID: 76670812}
 --- !u!143 &8242637342622029971
 CharacterController:
   m_ObjectHideFlags: 0
