@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
     public static int selection = 0;
     public TextMeshProUGUI description; 
     public static bool inventorySwitch = false;
+    public static bool isShowingDescription = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -65,11 +66,16 @@ public class Inventory : MonoBehaviour
                 inventory[selection].SetActive(true);
             }
         }
+        if (isShowingDescription) {
+            StopCoroutine("showDescription");
+            StartCoroutine("showDescription");
+            isShowingDescription = false;
+        }
 
     }
 
     void FixedUpdate() {
-        if (inventory[selection].name != "order") {
+        if (inventory[selection].tag != "order") {
             PlayerMovement.isOrderOut = false;
         } else {
             PlayerMovement.isOrderOut = true;

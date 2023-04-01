@@ -15,11 +15,17 @@ public class Website : MonoBehaviour
     public static bool leftWebsite = false;
     public GameObject drug;
     public Transform toolHeader;
+    public Button exitButton;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        exitButton.onClick.AddListener(delegate{
+            CameraLook.isPaused = false;
+            leftWebsite = true;
+            Inventory.inventory[Inventory.selection].SetActive(true);
+            Inventory.isShowingDescription = true;
+        });
     }
 
     // Update is called once per frame
@@ -53,9 +59,11 @@ public class Website : MonoBehaviour
                     newTools[Inventory.inventory.Length].SetActive(false);
                     Inventory.inventory = new GameObject[newTools.Length];
                     Inventory.inventory = newTools;
+                    Inventory.selection = Inventory.inventory.Length-1;
                     Inventory.inventory[Inventory.selection].SetActive(true);
                     Debug.Log("Success!");
                     Website.grabbedAntibiotic = "";
+                    Inventory.isShowingDescription = true;
                 }
             }
     }

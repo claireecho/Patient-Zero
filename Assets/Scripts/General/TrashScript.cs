@@ -70,9 +70,9 @@ public class TrashScript : MonoBehaviour
     
 
     void OnTriggerEnter(Collider other) {
-        canTrashStill = true;
         PlayerMovement.EText.color = Color.black;
         if (other.gameObject.tag == "trash") {
+            canTrashStill = true;
             foreach (GameObject i in Inventory.globalTools) {
                 canConfirmTrash = true;
                 if (Inventory.inventory[Inventory.selection].name == i.name) {
@@ -86,8 +86,9 @@ public class TrashScript : MonoBehaviour
     }
 
     void OnTriggerExit(Collider other) {
-        canTrashStill = false;
         if (other.gameObject.tag == "trash") {
+            canTrashStill = false;
+            canConfirmTrash = false;
             PlayerMovement.EText.SetText("");
         }
     }

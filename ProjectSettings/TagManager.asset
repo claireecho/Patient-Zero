@@ -19,6 +19,7 @@ TagManager:
   - fowardButton
   - pharmacy
   - trash
+  - order
   layers:
   - Default
   - TransparentFX
