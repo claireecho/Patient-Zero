@@ -15,6 +15,7 @@ public class Dialogue : MonoBehaviour
     public static TextMeshProUGUI dialogueText;
     public static TextMeshProUGUI speakerText;
     public GameObject confirmCollider;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Awake()
@@ -99,6 +100,8 @@ public class Dialogue : MonoBehaviour
         resetNextArrow();
         CameraLook.isPaused = true;
         Canvas.SetActive(true);
+        audioSource.Stop();
+        audioSource.Play();
         Inventory.inventory[Inventory.selection].SetActive(false);
 
         DialogueIsPlaying = true;

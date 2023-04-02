@@ -86,9 +86,6 @@ public class PatientGameplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             if (PlayerMovement.canGrabPatient) {
                 confirmCollider.SetActive(true);
-                ClipboardScript.dropDownObject.SetActive(true);
-                ClipboardScript.diagnosisText.SetText("");
-                ClipboardScript.dropdown.value = 0;
                 Destroy(patientObject);
                 patientObject = Instantiate(patientPrefab, officeSpawn.transform.position, officeSpawn.transform.rotation);
                 // transform.Rotate(0, 10f, 0);
@@ -101,7 +98,6 @@ public class PatientGameplay : MonoBehaviour
         if (isCompleted) {
             patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
             isCurrentPatient = false;
-            isCompleted = false;
             Destroy(patientObject);
         }
 

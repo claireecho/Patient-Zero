@@ -7,6 +7,7 @@ using TMPro;
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private GameObject[] tools = new GameObject[0];
+    [SerializeField] private GameObject[] surgeryTools = new GameObject[0];
     public static GameObject[] globalTools;
     public static GameObject[] inventory;
     public static int selection = 0;

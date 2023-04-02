@@ -32,7 +32,15 @@ public class PlayerMovement : MonoBehaviour
     public static bool queueDialogue = false; // checks if player has summoned a patient
     public static bool isPillsOut = false; // checks if pills are out
     public static bool isTreatmentCollider = false; // checks if player is standing in treatment collider
+    public static Collider waitingRoomCollider; // waiting room collider
     public GameObject defaultSpawn; // where PLAYER will spawn at default
+
+    public AudioSource audioSource;
+
+    public AudioClip walkingSound;
+    public AudioClip wrongSound;
+
+    public static bool _inSurgery = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,7 +48,9 @@ public class PlayerMovement : MonoBehaviour
         EText = GameObject.FindWithTag("text").GetComponent<TextMeshProUGUI>();
         EText.SetText("");
         pharmacyWebsite.SetActive(false);
+        waitingRoomCollider = GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>();
     }
+
 
     // Update is called once per frame
     void Update()
@@ -54,6 +64,23 @@ public class PlayerMovement : MonoBehaviour
             float moveFB = Input.GetAxis("Vertical");
             Vector3 move = transform.right * moveLR + transform.forward * moveFB;
             controller.Move(move * speed * Time.deltaTime);
+            if (move != Vector3.zero) {
+                if (!audioSource.isPlaying) {
+                    audioSource.clip = walkingSound;
+                    audioSource.loop = true;
+                    audioSource.Play();
+                } else {
+                    if (audioSource.clip == walkingSound) {
+                        audioSource.UnPause();
+                    }
+                }
+            } else {
+                if (audioSource.clip == walkingSound) {
+                    audioSource.Pause();
+                }
+            }
+        } else {
+            audioSource.Pause();
         }
 
         // Gravity Pt. 2
@@ -68,7 +95,8 @@ public class PlayerMovement : MonoBehaviour
             if (canGrabPatient) {
                 grabbedPatient = true;
                 canGrabPatient = false;
-                GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>().enabled = false;
+                Debug.Log("waitingRoom Collider disabled");
+                waitingRoomCollider.enabled = false;
                 gameObject.transform.position = officeSpawn.transform.position;
                 Camera.main.transform.rotation = Quaternion.Euler(20.0000057f,226f,0f);
                 transform.rotation = Quaternion.Euler(0, -133, 0);
@@ -80,13 +108,11 @@ public class PlayerMovement : MonoBehaviour
             } else if (canEnterOffice) {
                 gameObject.transform.position = officeSpawn.transform.position;
                 EText.SetText("");
-            } else if (canEnterSurgery && isOrderOut && PatientGameplay.isCurrentPatient) { //  && Patient.isCurrentPatient
-                gameObject.transform.position = surgerySpawn.transform.position;
-                EText.SetText("");
             } else if (canConfirmWithPatient) {
                 // double check if player wants to exit
                 if (ClipboardScript.dropdown.captionText.text == "N/A") {
                     EText.SetText("You must choose a diagnosis before confirming with your patient");
+                    playWrongSound();
                     EText.color = TrashScript.red;
                     canConfirmWithPatient = false;
                 } else {
@@ -100,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (isTreatmentCollider) {
+        if (isTreatmentCollider && PatientGameplay.isCurrentPatient) {
             if (PatientGameplay.confirmCollider.activeSelf == false) {
                 if (isPillsOut) {
                     EText.SetText("Press E to give " + Inventory.inventory[Inventory.selection].name + " to " + PatientGameplay.patient.getFirstName());
@@ -183,16 +209,18 @@ public class PlayerMovement : MonoBehaviour
         }
 
 
-        if (canEnterSurgery && isOrderOut && PatientGameplay.isCurrentPatient) { //  && Patient.isCurrentPatient
-            EText.SetText("Press E to send patient into surgery");
-        } else if (canEnterSurgery && !isOrderOut) {
-            EText.SetText("");
-        }
-
         if (PatientGameplay.isCompleted) {
             reset();
+            PatientGameplay.isCompleted = false;
         }
 
+    }
+
+    public void playWrongSound() {
+        audioSource.Stop();
+        audioSource.clip = wrongSound;
+        audioSource.Play();
+        audioSource.loop = false;
     }
 
     // RESETS PLAYER
@@ -200,7 +228,12 @@ public class PlayerMovement : MonoBehaviour
         gameObject.transform.position = officeSpawn.transform.position;
         transform.rotation = Quaternion.Euler(0, -133, 0);
         EText.SetText("");
-        GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>().enabled = true;
+        Debug.Log("waitingRoom Collider enabled");
+        waitingRoomCollider.enabled = true;
+
+        ClipboardScript.diagnosisText.SetText("");
+        ClipboardScript.dropDownObject.SetActive(true);
+        ClipboardScript.dropdown.value = 0;
 
         queueDialogue = false;
         grabbedPatient = false;
@@ -220,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
             canEnterOffice = true;
         } else if (other.CompareTag("surgeryRoom")) {
             canEnterSurgery = true;
-        } else if (other.CompareTag("confirmWithPatient")) {
+        } else if (other.CompareTag("confirmWithPatient") && PatientGameplay.isCurrentPatient) {
             EText.SetText("Press E to confirm diagnosis with " + PatientGameplay.patient.getFirstName());
             canConfirmWithPatient = true;
         } else if (other.CompareTag("pharmacy")) {
