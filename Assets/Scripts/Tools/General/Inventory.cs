@@ -59,13 +59,6 @@ public class Inventory : MonoBehaviour
                 }
             }
         }
-        if (Input.GetKeyDown(KeyCode.E)) {
-            if (PlayerMovement.canUsePharmacy) {
-                inventory[selection].SetActive(false);
-            } else if (!PlayerMovement.canUsePharmacy) {
-                inventory[selection].SetActive(true);
-            }
-        }
         if (isShowingDescription) {
             StopCoroutine("showDescription");
             StartCoroutine("showDescription");
@@ -79,6 +72,11 @@ public class Inventory : MonoBehaviour
             PlayerMovement.isOrderOut = false;
         } else {
             PlayerMovement.isOrderOut = true;
+        }
+        if (inventory[selection].name.IndexOf("Antibiotic") != -1) {
+            PlayerMovement.isPillsOut = true;
+        } else {
+            PlayerMovement.isPillsOut = false;
         }
         if (TrashScript.canTrashStill) {
             foreach (GameObject i in globalTools) {

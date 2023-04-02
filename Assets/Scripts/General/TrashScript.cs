@@ -30,7 +30,7 @@ public class TrashScript : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Y) && canConfirmTrash) { // for when you want to leave surgery
+        if (Input.GetKeyDown(KeyCode.Y) && canConfirmTrash) {
             Destroy(Inventory.inventory[Inventory.selection]);
             GameObject[] newTools = new GameObject[Inventory.inventory.Length-1];
             for (int i = 0; i < Inventory.inventory.Length; i++) {

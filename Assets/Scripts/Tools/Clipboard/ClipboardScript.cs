@@ -31,7 +31,9 @@ public class ClipboardScript : MonoBehaviour
     public static TextMeshProUGUI objectiveText;
     private static TextMeshProUGUI titleText;
     public static TMPro.TMP_Dropdown dropdown;
+    public static GameObject dropDownObject;
     public GameObject clipboardCanvas;
+    public static TextMeshProUGUI diagnosisText;
 
     // Start is called before the first frame update
     void Awake()
@@ -39,6 +41,9 @@ public class ClipboardScript : MonoBehaviour
         objectiveText = GameObject.FindWithTag("clipboardText").GetComponent<TextMeshProUGUI>();
         titleText = GameObject.FindWithTag("clipboardTitle").GetComponent<TextMeshProUGUI>();
         dropdown = GameObject.FindWithTag("clipboardDropdown").GetComponent<TMPro.TMP_Dropdown>();
+        dropDownObject = GameObject.FindWithTag("clipboardDropdown");
+        diagnosisText = clipboardCanvas.transform.GetChild(4).GetComponent<TextMeshProUGUI>();
+        diagnosisText.SetText("");
         hideClipboard();
     }
 

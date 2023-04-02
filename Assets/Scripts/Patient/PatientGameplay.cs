@@ -5,6 +5,8 @@ using System.IO;
 
 public class PatientGameplay : MonoBehaviour
 {
+    public GameObject patientPrefab;
+    public static GameObject patientObject;
     public static Patient patient;
     public static string[] lastNames;
     public static string[] firstNames;
@@ -14,8 +16,9 @@ public class PatientGameplay : MonoBehaviour
     public static string[] treatments;
     public GameObject officeSpawn;
     public GameObject surgerySpawn;
-    public GameObject confirmCollider;
+    public static GameObject confirmCollider;
     public static bool isCurrentPatient = false;
+    public static bool isCompleted = false;
 
     // Start is called before the first frame update
     // may need to change path if files change location depending on user
@@ -83,14 +86,23 @@ public class PatientGameplay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             if (PlayerMovement.canGrabPatient) {
                 confirmCollider.SetActive(true);
+                ClipboardScript.dropDownObject.SetActive(true);
+                ClipboardScript.diagnosisText.SetText("");
                 ClipboardScript.dropdown.value = 0;
-                gameObject.transform.position = officeSpawn.transform.position;
-                gameObject.transform.rotation = officeSpawn.transform.rotation;
+                Destroy(patientObject);
+                patientObject = Instantiate(patientPrefab, officeSpawn.transform.position, officeSpawn.transform.rotation);
                 // transform.Rotate(0, 10f, 0);
             } else if (PlayerMovement.canEnterSurgery && PlayerMovement.isOrderOut) {
-                gameObject.transform.position = surgerySpawn.transform.position;
-                gameObject.transform.rotation = surgerySpawn.transform.rotation;
+                patientObject.transform.position = surgerySpawn.transform.position;
+                patientObject.transform.rotation = surgerySpawn.transform.rotation;
             }
+        }
+
+        if (isCompleted) {
+            patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
+            isCurrentPatient = false;
+            isCompleted = false;
+            Destroy(patientObject);
         }
 
     }

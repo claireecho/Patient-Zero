@@ -8,11 +8,12 @@ public class CameraLook : MonoBehaviour
     public float mouseSensitivity = 5f;
     public float xRotation = 0f;
     public static bool isPaused = false;
+    public GameObject dialogueCanva;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        dialogueCanva = GameObject.FindGameObjectWithTag("dialogueCanva");
     }
 
     // Update is called once per frame
@@ -33,13 +34,17 @@ public class CameraLook : MonoBehaviour
 
             playerReference.Rotate(Vector3.up * mouseX);
         } else {
+            if (Dialogue.DialogueIsPlaying)
+                transform.rotation = Quaternion.Euler(20.0000057f,226f,0f);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+
         if (Input.GetKeyDown(KeyCode.E)) {
             if (PlayerMovement.canUsePharmacy) {
                     isPaused = true;
             }
         }
+
     }
 }

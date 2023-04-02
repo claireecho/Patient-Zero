@@ -6,6 +6,7 @@ public class Patient {
     private string diagnosis;
     private string concern;
     private string treatment;
+    private string treated;
 
     public Patient(string f, string l, string s, string d, string c, string t) {
         firstName = f;
@@ -14,6 +15,7 @@ public class Patient {
         diagnosis = d;
         concern = c;
         treatment = t;
+        treated = "";
     }
 
     public string getFirstName() {
@@ -40,6 +42,10 @@ public class Patient {
         return treatment;
     }
 
+    public string getTreated() {
+        return treated;
+    }
+
     public void setFirstName(string f) {
         firstName = f;
     }
@@ -62,6 +68,20 @@ public class Patient {
 
     public void setTreatment(string t) {
         treatment = t;
+    }
+
+    public void setTreated(string t) {
+        treated = t;
+    }
+
+    public bool Success() {
+        treated = "YES";
+        return true;
+    }
+
+    public bool Failure() {
+        treated = "NO";
+        return false;
     }
 
     public string toString() {

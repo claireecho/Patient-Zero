@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
     public GameObject pharmacyWebsite; // website for pharmacy
     public static bool queueDialogue = false; // checks if player has summoned a patient
+    public static bool isPillsOut = false; // checks if pills are out
+    public static bool isTreatmentCollider = false; // checks if player is standing in treatment collider
+    public GameObject defaultSpawn; // where PLAYER will spawn at default
 
     // Start is called before the first frame update
     void Awake()
@@ -64,7 +67,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             if (canGrabPatient) {
                 grabbedPatient = true;
+                canGrabPatient = false;
+                GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>().enabled = false;
                 gameObject.transform.position = officeSpawn.transform.position;
+                Camera.main.transform.rotation = Quaternion.Euler(20.0000057f,226f,0f);
                 transform.rotation = Quaternion.Euler(0, -133, 0);
                 EText.SetText("");
                 queueDialogue = true;
@@ -89,7 +95,20 @@ public class PlayerMovement : MonoBehaviour
                 }
             } else if (canUsePharmacy) {
                 pharmacyWebsite.SetActive(true);
+                Inventory.inventory[Inventory.selection].SetActive(false);
                 EText.SetText("");
+            }
+        }
+
+        if (isTreatmentCollider) {
+            if (PatientGameplay.confirmCollider.activeSelf == false) {
+                if (isPillsOut) {
+                    EText.SetText("Press E to give " + Inventory.inventory[Inventory.selection].name + " to " + PatientGameplay.patient.getFirstName());
+                } else if (isOrderOut) {
+                    EText.SetText("Press E to send " + PatientGameplay.patient.getFirstName() + " into surgery");
+                } else {
+                    EText.SetText("");
+                }
             }
         }
 
@@ -97,8 +116,41 @@ public class PlayerMovement : MonoBehaviour
             pharmacyWebsite.SetActive(false);
             Website.leftWebsite = false;
         }
+        // GIVING PATIENT MEDICATION ----------------------------
+        if (Input.GetKeyDown(KeyCode.E) && isPillsOut && isTreatmentCollider && PatientGameplay.confirmCollider.activeSelf == false) {
 
-        if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) { // for when you want to leave surgery
+            // Checks if patient got correct antibiotic
+            if (Inventory.inventory[Inventory.selection].name.IndexOf(PatientGameplay.patient.getDiagnosis()) != -1) {
+                PatientGameplay.patient.Success();
+                gameObject.transform.position = officeSpawn.transform.position;
+                transform.rotation = Quaternion.Euler(0, -133, 0);
+            } else {
+                PatientGameplay.patient.Failure();
+                gameObject.transform.position = officeSpawn.transform.position;
+                transform.rotation = Quaternion.Euler(0, -133, 0);
+            }
+
+
+            // Destroy the pill from the inventory
+            Destroy(Inventory.inventory[Inventory.selection]);
+            GameObject[] newTools = new GameObject[Inventory.inventory.Length-1];
+            for (int i = 0; i < Inventory.inventory.Length; i++) {
+                if (i < Inventory.selection) {
+                    newTools[i] = Inventory.inventory[i];
+                } else if (i > Inventory.selection) {
+                    newTools[i-1] = Inventory.inventory[i];
+                }
+            }
+            Inventory.inventory = new GameObject[newTools.Length];
+            Inventory.inventory = newTools;
+            Inventory.selection = 0;
+            Inventory.inventory[Inventory.selection].SetActive(true);
+
+        } 
+
+
+        // FOR LEAVING SURGERY ----------------------------
+        if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) {
             gameObject.transform.position = postSurgerySpawn.transform.position;
             EText.SetText("");
             canConfirmExit = false;
@@ -115,6 +167,8 @@ public class PlayerMovement : MonoBehaviour
             EText.SetText("");
             canConfirmWithPatient = false;
             EText.color = Color.black;
+            ClipboardScript.diagnosisText.SetText(ClipboardScript.dropdown.captionText.text);
+            ClipboardScript.dropDownObject.SetActive(false);
         } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
             EText.SetText("");
             canConfirmWithPatient = false;
@@ -135,8 +189,22 @@ public class PlayerMovement : MonoBehaviour
             EText.SetText("");
         }
 
+        if (PatientGameplay.isCompleted) {
+            reset();
+        }
+
     }
 
+    // RESETS PLAYER
+    public void reset() {
+        gameObject.transform.position = officeSpawn.transform.position;
+        transform.rotation = Quaternion.Euler(0, -133, 0);
+        EText.SetText("");
+        GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>().enabled = true;
+
+        queueDialogue = false;
+        grabbedPatient = false;
+    }
 
     // collider for entrances
     private void OnTriggerEnter(Collider other) {
@@ -158,6 +226,8 @@ public class PlayerMovement : MonoBehaviour
         } else if (other.CompareTag("pharmacy")) {
             EText.SetText("Press E to access pharmacy supply");
             canUsePharmacy = true;
+        } else if (other.CompareTag("treatment")) {
+            isTreatmentCollider = true;
         }
     }
 
@@ -175,6 +245,8 @@ public class PlayerMovement : MonoBehaviour
             canConfirmWithPatient = false;
         } else if (other.CompareTag("pharmacy")) {
             canUsePharmacy = false;
+        } else if (other.CompareTag("treatment")) {
+            isTreatmentCollider = false;
         }
         EText.SetText("");
     }

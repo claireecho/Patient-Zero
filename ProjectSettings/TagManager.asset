@@ -22,6 +22,9 @@ TagManager:
   - order
   - clipboardDropdown
   - confirmWithPatient
+  - treatment
+  - dialogueCanva
+  - officeSpawn
   layers:
   - Default
   - TransparentFX

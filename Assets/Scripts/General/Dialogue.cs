@@ -22,8 +22,12 @@ public class Dialogue : MonoBehaviour
         speakerText = Canvas.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         dialogueText = Canvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         nextArrow = Canvas.transform.GetChild(3).GetComponent<Button>();
-        Canvas.SetActive(false);
+        PatientGameplay.confirmCollider = confirmCollider;
         resetNextArrow();
+    }
+
+    void Start() {
+        Canvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -43,6 +47,25 @@ public class Dialogue : MonoBehaviour
             setDialogue(d);
             startDialogue();
         }
+
+        // Patient received antibiotics-------------------
+        if (PlayerMovement.isPillsOut) {    
+            if (PatientGameplay.patient.getTreated() == "YES") {
+                setDialogue(new string[,] {
+                    {"You", "Here you go " + PatientGameplay.patient.getFirstName() + ". I hope you feel better soon!"},
+                    {PatientGameplay.patient.getFirstName(), "Thank you so much! I feel so much better now!"},
+                    {"You", "I'm glad to hear that!"}
+                });
+                startDialogue();
+            } else if (PatientGameplay.patient.getTreated() == "NO") {
+                setDialogue(new string[,] {
+                    {"You", "Here you go " + PatientGameplay.patient.getFirstName() + ". I hope you feel better soon!"},
+                    {PatientGameplay.patient.getFirstName(), "..."},
+                });
+                startDialogue();
+            }
+        }
+
     }
 
     public void resetNextArrow() {
@@ -59,6 +82,9 @@ public class Dialogue : MonoBehaviour
                 Inventory.inventory[Inventory.selection].SetActive(true);
                 DialogueIsPlaying = false;
                 Inventory.isShowingDescription = true;
+                if (PatientGameplay.patient.getTreated() != "") {
+                    PatientGameplay.isCompleted = true;
+                }
             }
         });
     }
