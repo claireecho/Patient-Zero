@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     public static bool grabbedPatient = false; // checks if player has grabbed patient
     public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
     public GameObject pharmacyWebsite; // website for pharmacy
+    public static bool queueDialogue = false; // checks if player has summoned a patient
 
     // Start is called before the first frame update
     void Start()
@@ -63,8 +64,9 @@ public class PlayerMovement : MonoBehaviour
             if (canGrabPatient) {
                 grabbedPatient = true;
                 gameObject.transform.position = officeSpawn.transform.position;
-                transform.Rotate(0, 90f, 0);
+                transform.rotation = Quaternion.Euler(0, -133, 0);
                 EText.SetText("");
+                queueDialogue = true;
             } else if (canLeaveOffice) {
                 gameObject.transform.position = hallwaySpawn.transform.position;
                 EText.SetText("");

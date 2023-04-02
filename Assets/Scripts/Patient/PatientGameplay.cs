@@ -55,6 +55,7 @@ public class PatientGameplay : MonoBehaviour
         Website.antibiotics = t.Substring(0, t.Length-1).Split("\n");
         book.maxPage = diagnoses.Length / book.numberOfDOnPage + (diagnoses.Length % book.numberOfDOnPage == 0 ? 0 : 1);
 
+
     }
 
     // Update is called once per frame
@@ -72,6 +73,10 @@ public class PatientGameplay : MonoBehaviour
                 patient = new Patient(firstNames[randomIndex2], lastNames[Random.Range(0, lastNames.Length)], sexes[randomIndex2], diagnoses[randomIndex], concerns[randomIndex], treatments[randomIndex]);
             }
             isCurrentPatient = true;
+            // DIALOGUE INTRODUCTION OF PATIENT TO DOCTOR !!!!!!!
+            Dialogue.dialogue = new string[,] {{"Patient", "Hi Doctor, I'm " + patient.getFirstName() + " " + patient.getLastName() + ", and I'm feeling a bit sick. Can you help me?"}, {"Player", "Sure, let's take a look at you."}, {PatientGameplay.patient.getFirstName(), "Thanks!"}};
+            Dialogue.speakerText.SetText(Dialogue.dialogue[Dialogue.dialogueIndex, 0]);
+            Dialogue.dialogueText.SetText(Dialogue.dialogue[Dialogue.dialogueIndex, 1]);
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
