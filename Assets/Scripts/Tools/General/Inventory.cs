@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     public static bool inventorySwitch = false;
     public static bool isShowingDescription = false;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         inventory = new GameObject[tools.Length];
         for (int i = 0; i < tools.Length; i++) {

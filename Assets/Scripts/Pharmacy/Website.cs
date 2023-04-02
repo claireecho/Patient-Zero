@@ -18,7 +18,7 @@ public class Website : MonoBehaviour
     public Button exitButton;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         exitButton.onClick.AddListener(delegate{
             CameraLook.isPaused = false;

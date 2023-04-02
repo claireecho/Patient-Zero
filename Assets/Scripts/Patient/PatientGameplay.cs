@@ -14,11 +14,12 @@ public class PatientGameplay : MonoBehaviour
     public static string[] treatments;
     public GameObject officeSpawn;
     public GameObject surgerySpawn;
+    public GameObject confirmCollider;
     public static bool isCurrentPatient = false;
 
     // Start is called before the first frame update
     // may need to change path if files change location depending on user
-    void Start()
+    void Awake()
     {
         patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
 
@@ -54,7 +55,7 @@ public class PatientGameplay : MonoBehaviour
         }
         Website.antibiotics = t.Substring(0, t.Length-1).Split("\n");
         book.maxPage = diagnoses.Length / book.numberOfDOnPage + (diagnoses.Length % book.numberOfDOnPage == 0 ? 0 : 1);
-
+        
 
     }
 
@@ -74,13 +75,15 @@ public class PatientGameplay : MonoBehaviour
             }
             isCurrentPatient = true;
             // DIALOGUE INTRODUCTION OF PATIENT TO DOCTOR !!!!!!!
-            Dialogue.dialogue = new string[,] {{"Patient", "Hi Doctor, I'm " + patient.getFirstName() + " " + patient.getLastName() + ", and I'm feeling a bit sick. Can you help me?"}, {"Player", "Sure, let's take a look at you."}, {PatientGameplay.patient.getFirstName(), "Thanks!"}};
+            Dialogue.dialogue = new string[,] {{"Patient", "Hi Doctor, I'm " + patient.getFirstName() + " " + patient.getLastName() + ", and I'm feeling a bit sick. Can you help me?"}, {"You", "Sure, let's take a look at you."}, {PatientGameplay.patient.getFirstName(), "Thanks!"}};
             Dialogue.speakerText.SetText(Dialogue.dialogue[Dialogue.dialogueIndex, 0]);
             Dialogue.dialogueText.SetText(Dialogue.dialogue[Dialogue.dialogueIndex, 1]);
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
             if (PlayerMovement.canGrabPatient) {
+                confirmCollider.SetActive(true);
+                ClipboardScript.dropdown.value = 0;
                 gameObject.transform.position = officeSpawn.transform.position;
                 gameObject.transform.rotation = officeSpawn.transform.rotation;
                 // transform.Rotate(0, 10f, 0);

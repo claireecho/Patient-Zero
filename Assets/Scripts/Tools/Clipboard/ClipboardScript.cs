@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
+using UnityEngine.UI;
 
 public class ClipboardScript : MonoBehaviour
 {
@@ -30,17 +30,22 @@ public class ClipboardScript : MonoBehaviour
     public static bool isBeingUsed = false;
     public static TextMeshProUGUI objectiveText;
     private static TextMeshProUGUI titleText;
+    public static TMPro.TMP_Dropdown dropdown;
+    public GameObject clipboardCanvas;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         objectiveText = GameObject.FindWithTag("clipboardText").GetComponent<TextMeshProUGUI>();
         titleText = GameObject.FindWithTag("clipboardTitle").GetComponent<TextMeshProUGUI>();
+        dropdown = GameObject.FindWithTag("clipboardDropdown").GetComponent<TMPro.TMP_Dropdown>();
         hideClipboard();
     }
 
-    void OnDisable() {
-        hideClipboard();
+    void Start() {
+        dropdown.ClearOptions();
+        dropdown.AddOptions(new List<string>{"N/A"});
+        dropdown.AddOptions(new List<string>(PatientGameplay.diagnoses));
     }
 
     // Update is called once per frame
@@ -70,16 +75,19 @@ public class ClipboardScript : MonoBehaviour
         transform.rotation = restPosition.transform.rotation;
 
         // hide text on clipboard
-        objectiveText.SetText("");
-        titleText.SetText("");
+        clipboardCanvas.SetActive(false);
 
         isBeingUsed = false;
+        CameraLook.isPaused = false;
         
     }
     void showClipboard() {
         // changes position and rotation of clipboard
+        clipboardCanvas.SetActive(true);
         transform.position = secondPosition.transform.position;
         transform.rotation = secondPosition.transform.rotation;
+        CameraLook.isPaused = true;
+
 
         // show text on clipboard
         objectiveText.SetText(PatientGameplay.patient.toString());

@@ -20,6 +20,8 @@ TagManager:
   - pharmacy
   - trash
   - order
+  - clipboardDropdown
+  - confirmWithPatient
   layers:
   - Default
   - TransparentFX
