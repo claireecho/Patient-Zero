@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
 
     public AudioClip walkingSound;
     public AudioClip wrongSound;
+    public AudioClip doorSound;
+    public AudioClip pharmacySound;
 
     public static bool _inSurgery = false;
 
@@ -93,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E)) {
             if (canGrabPatient) {
+                playSound(doorSound);
                 grabbedPatient = true;
                 canGrabPatient = false;
                 Debug.Log("waitingRoom Collider disabled");
@@ -103,16 +106,18 @@ public class PlayerMovement : MonoBehaviour
                 EText.SetText("");
                 queueDialogue = true;
             } else if (canLeaveOffice) {
+                playSound(doorSound);
                 gameObject.transform.position = hallwaySpawn.transform.position;
                 EText.SetText("");
             } else if (canEnterOffice) {
+                playSound(doorSound);
                 gameObject.transform.position = officeSpawn.transform.position;
                 EText.SetText("");
             } else if (canConfirmWithPatient) {
                 // double check if player wants to exit
                 if (ClipboardScript.dropdown.captionText.text == "N/A") {
                     EText.SetText("You must choose a diagnosis before confirming with your patient");
-                    playWrongSound();
+                    playSound(wrongSound);
                     EText.color = TrashScript.red;
                     canConfirmWithPatient = false;
                 } else {
@@ -123,6 +128,7 @@ public class PlayerMovement : MonoBehaviour
                 pharmacyWebsite.SetActive(true);
                 Inventory.inventory[Inventory.selection].SetActive(false);
                 EText.SetText("");
+                playSound(pharmacySound);
             }
         }
 
@@ -139,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         if (Website.leftWebsite) {
+            playSound(pharmacySound);
             pharmacyWebsite.SetActive(false);
             Website.leftWebsite = false;
         }
@@ -216,9 +223,9 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    public void playWrongSound() {
+    public void playSound(AudioClip sound) {
         audioSource.Stop();
-        audioSource.clip = wrongSound;
+        audioSource.clip = sound;
         audioSource.Play();
         audioSource.loop = false;
     }

@@ -10,16 +10,19 @@ public class mainMenuScript : MonoBehaviour
     public Button startButton;
     public Button exitButton;
     public Button settingButton;
+    public AudioSource audioSource;
 
     public void startGame() {
         SceneManager.LoadScene("SampleScene");
     }
 
     public void changeScene(string sceneName) {
+        audioSource.Play();
         SceneManager.LoadScene(sceneName);
     }
 
     public void Exit() {
+        audioSource.Play();
         Application.Quit();
     }
 

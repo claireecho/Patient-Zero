@@ -3378,7 +3378,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f24340601be0ca245a7d38a0142178ec, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -9388,6 +9388,8 @@ MonoBehaviour:
   audioSource: {fileID: 8242637342622029974}
   walkingSound: {fileID: 8300000, guid: 2d50705d9d1664d4798ebe45c49d0ee9, type: 3}
   wrongSound: {fileID: 8300000, guid: 2d88a8e6dc3b0a54fb1d431169a3065e, type: 3}
+  doorSound: {fileID: 8300000, guid: 764416e24801bf5469789576d4d90eb2, type: 3}
+  pharmacySound: {fileID: 8300000, guid: ec18fe5f03d8ab84f9fd02ac93e05ed2, type: 3}
 --- !u!4 &8242637342622029934
 Transform:
   m_ObjectHideFlags: 0
@@ -9482,6 +9484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canDestroy: 0
   itemSwitched: 0
+  audioSource: {fileID: 8242637342622029974}
+  trashSound: {fileID: 8300000, guid: 78f3ba9e4e422de488d295889b38da02, type: 3}
 --- !u!114 &8242637342622029973
 MonoBehaviour:
   m_ObjectHideFlags: 0

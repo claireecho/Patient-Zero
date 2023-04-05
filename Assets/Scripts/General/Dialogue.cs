@@ -83,7 +83,7 @@ public class Dialogue : MonoBehaviour
                 Inventory.inventory[Inventory.selection].SetActive(true);
                 DialogueIsPlaying = false;
                 Inventory.isShowingDescription = true;
-                if (PatientGameplay.patient.getTreated() != "") {
+                if (PatientGameplay.patient.getTreated() != "") {  
                     PatientGameplay.isCompleted = true;
                 }
             }

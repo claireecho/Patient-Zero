@@ -11,10 +11,20 @@ public class TrashScript : MonoBehaviour
     public bool itemSwitched = false;
     public static bool canTrashStill = false;
 
+    public AudioSource audioSource;
+    public AudioClip trashSound;
+
     // Start is called before the first frame update
     void Start()
     {
 
+    }
+
+    public void playSound(AudioClip sound) {
+        audioSource.Stop();
+        audioSource.clip = sound;
+        audioSource.Play();
+        audioSource.loop = false;
     }
 
     // Update is called once per frame
@@ -31,6 +41,7 @@ public class TrashScript : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Y) && canConfirmTrash) {
+            playSound(trashSound);
             Destroy(Inventory.inventory[Inventory.selection]);
             GameObject[] newTools = new GameObject[Inventory.inventory.Length-1];
             for (int i = 0; i < Inventory.inventory.Length; i++) {
