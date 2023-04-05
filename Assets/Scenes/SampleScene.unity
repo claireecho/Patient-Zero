@@ -9007,7 +9007,7 @@ GameObject:
   - component: {fileID: 1711813854668920322}
   - component: {fileID: 3469287838463484617}
   m_Layer: 0
-  m_Name: ' Clipboard (Press Space to access Patient information)'
+  m_Name: Clipboard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
