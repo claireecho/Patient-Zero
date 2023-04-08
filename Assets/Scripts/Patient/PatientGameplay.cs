@@ -84,12 +84,15 @@ public class PatientGameplay : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
+            // if patient is eligible to be grabbed in the waiting room
             if (PlayerMovement.canGrabPatient) {
                 confirmCollider.SetActive(true);
                 Destroy(patientObject);
                 patientObject = Instantiate(patientPrefab, officeSpawn.transform.position, officeSpawn.transform.rotation);
                 // transform.Rotate(0, 10f, 0);
+            // if patient is eligible for surgery & order is out, move to surgery
             } else if (PlayerMovement.canEnterSurgery && PlayerMovement.isOrderOut) {
+                PlayerMovement._inSurgery = true;
                 patientObject.transform.position = surgerySpawn.transform.position;
                 patientObject.transform.rotation = surgerySpawn.transform.rotation;
             }
