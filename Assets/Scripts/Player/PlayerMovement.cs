@@ -182,6 +182,15 @@ public class PlayerMovement : MonoBehaviour
         } 
 
 
+        // SENDING PATIENT INTO SURGERY ----------------------------
+        if (Input.GetKeyDown(KeyCode.E) && isTreatmentCollider && canEnterSurgery) {
+                gameObject.transform.position = surgerySpawn.transform.position;
+                _inSurgery = true;
+                EText.SetText("");
+                EText.color = Color.black;
+                playSound(doorSound);
+        }
+
         // FOR LEAVING SURGERY ----------------------------
         if (Input.GetKeyDown(KeyCode.Y) && canConfirmExit) {
             gameObject.transform.position = postSurgerySpawn.transform.position;
