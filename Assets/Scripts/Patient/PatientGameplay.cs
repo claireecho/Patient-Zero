@@ -26,10 +26,8 @@ public class PatientGameplay : MonoBehaviour
     {
 
         // initialize patient
-
         surgerySpawn = GameObject.FindGameObjectWithTag("patientSurgerySpawn");
         officeSpawn = GameObject.FindGameObjectWithTag("patientOfficeSpawn");
-
         patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
 
         // read in files
@@ -71,6 +69,8 @@ public class PatientGameplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         // Creates a new patient if the player has grabbed a patient
         if (PlayerMovement.grabbedPatient) {
             PlayerMovement.grabbedPatient = false;
@@ -104,9 +104,10 @@ public class PatientGameplay : MonoBehaviour
             }
         }
 
-        if (isCompleted) {
+        if (isCompleted || (Input.GetKeyDown(KeyCode.Y) && PlayerMovement.canConfirmExit)) {
             patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
             isCurrentPatient = false;
+            monitor.isInSurgery = false;
             Destroy(patientObject);
         }
 
@@ -145,6 +146,20 @@ public class PatientGameplay : MonoBehaviour
             // Treatment: Rest, Medicine
         }
         return temp;
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "inSurgery") {
+            monitor.isInSurgery = true;
+            Debug.Log("worked");
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.gameObject.tag == "inSurgery") {
+            monitor.isInSurgery = false;
+            Debug.Log("stopped working");
+        }
     }
     
 

@@ -134,6 +134,7 @@ MonoBehaviour:
   patientPrefab: {fileID: 9191797010023317911}
   officeSpawn: {fileID: 0}
   surgerySpawn: {fileID: 0}
+  monitorCanvas: {fileID: 0}
 --- !u!82 &2380520279081952984
 AudioSource:
   m_ObjectHideFlags: 0

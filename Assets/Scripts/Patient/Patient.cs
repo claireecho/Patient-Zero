@@ -7,6 +7,7 @@ public class Patient {
     private string concern;
     private string treatment;
     private string treated;
+    private bool isAlive;
 
     public Patient(string f, string l, string s, string d, string c, string t) {
         firstName = f;
@@ -16,6 +17,7 @@ public class Patient {
         concern = c;
         treatment = t;
         treated = "";
+        isAlive = true;
     }
 
     public string getFirstName() {
@@ -82,6 +84,14 @@ public class Patient {
     public bool Failure() {
         treated = "NO";
         return false;
+    }
+
+    public bool getStatus() {
+        return isAlive;
+    }
+
+    public void killed() {
+        isAlive = false;
     }
 
     public string toString() {

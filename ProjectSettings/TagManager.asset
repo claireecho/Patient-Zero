@@ -28,6 +28,8 @@ TagManager:
   - surgeryCollider
   - patientSurgerySpawn
   - patientOfficeSpawn
+  - inSurgery
+  - monitorCanvas
   layers:
   - Default
   - TransparentFX

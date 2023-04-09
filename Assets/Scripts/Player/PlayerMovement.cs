@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public static TextMeshProUGUI EText;
     public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
     private bool canExitSurgery = false; // checks if player is standing in exitSurgery collider
-    private bool canConfirmExit = false; // checks if player can confirm exit from surgery
+    public static bool canConfirmExit = false; // checks if player can confirm exit from surgery
     public static bool grabbedPatient = false; // checks if player has grabbed patient
     public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
     public GameObject pharmacyWebsite; // website for pharmacy
@@ -46,9 +46,12 @@ public class PlayerMovement : MonoBehaviour
 
     public static bool _inSurgery = false;
 
+    int score;
+
     // Start is called before the first frame update
     void Awake()
     {
+        score = 0;
         EText = GameObject.FindWithTag("text").GetComponent<TextMeshProUGUI>();
         EText.SetText("");
         pharmacyWebsite.SetActive(false);
@@ -133,7 +136,7 @@ public class PlayerMovement : MonoBehaviour
                 EText.SetText("");
                 playSound(pharmacySound);
             } else if (canExitSurgery) {
-                EText.SetText("Are you sure you want to exit surgery? (Y/N)");
+                EText.SetText("You will abandon this patient. Are you sure you want to leave? (Y/N)");
                 EText.color = TrashScript.red;
                 canConfirmExit = true;
                 canExitSurgery = false;
@@ -206,6 +209,7 @@ public class PlayerMovement : MonoBehaviour
             EText.SetText("");
             canConfirmExit = false;
             EText.color = Color.black;
+            reset();
         } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
             EText.SetText("");
             canConfirmExit = false;
@@ -238,7 +242,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (PatientGameplay.isCompleted) {
             reset();
+            score++;
             PatientGameplay.isCompleted = false;
+            gameObject.transform.position = officeSpawn.transform.position;
+            transform.rotation = Quaternion.Euler(0, -133, 0);
         }
 
     }
@@ -252,8 +259,6 @@ public class PlayerMovement : MonoBehaviour
 
     // RESETS PLAYER
     public void reset() {
-        gameObject.transform.position = officeSpawn.transform.position;
-        transform.rotation = Quaternion.Euler(0, -133, 0);
         EText.SetText("");
         Debug.Log("waitingRoom Collider enabled");
         waitingRoomCollider.enabled = true;
@@ -291,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
             isTreatmentCollider = true;
         } else if (other.CompareTag("postSurgery")) {
             EText.SetText("Press E to leave surgery room");
-            canConfirmExit = true;
+            canExitSurgery = true;
         }
     }
 
