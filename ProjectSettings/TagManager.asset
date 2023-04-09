@@ -25,6 +25,9 @@ TagManager:
   - treatment
   - dialogueCanva
   - officeSpawn
+  - surgeryCollider
+  - patientSurgerySpawn
+  - patientOfficeSpawn
   layers:
   - Default
   - TransparentFX

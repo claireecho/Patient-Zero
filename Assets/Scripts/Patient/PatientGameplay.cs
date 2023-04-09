@@ -24,6 +24,12 @@ public class PatientGameplay : MonoBehaviour
     // may need to change path if files change location depending on user
     void Awake()
     {
+
+        // initialize patient
+
+        surgerySpawn = GameObject.FindGameObjectWithTag("patientSurgerySpawn");
+        officeSpawn = GameObject.FindGameObjectWithTag("patientOfficeSpawn");
+
         patient = new Patient("N/A", "", "N/A", "N/A", "N/A", "N/A");
 
         // read in files

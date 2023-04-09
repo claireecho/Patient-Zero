@@ -25,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
     public static bool ConfirmedWithPatient = false; // checks if player has confirmed with patient
     public static TextMeshProUGUI EText;
     public GameObject postSurgerySpawn; // where PLAYER will spawn after interacting with exitSurgery collider
-    private bool canConfirmExit = false; // checks if player can confirm exit
+    private bool canExitSurgery = false; // checks if player is standing in exitSurgery collider
+    private bool canConfirmExit = false; // checks if player can confirm exit from surgery
     public static bool grabbedPatient = false; // checks if player has grabbed patient
     public static bool canUsePharmacy = false; // checks if player is standing in pharmacy collider
     public GameObject pharmacyWebsite; // website for pharmacy
@@ -34,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public static bool isTreatmentCollider = false; // checks if player is standing in treatment collider
     public static Collider waitingRoomCollider; // waiting room collider
     public GameObject defaultSpawn; // where PLAYER will spawn at default
+    public static Collider surgeryCollider; // allows player to send patient into surgery
 
     public AudioSource audioSource;
 
@@ -51,6 +53,8 @@ public class PlayerMovement : MonoBehaviour
         EText.SetText("");
         pharmacyWebsite.SetActive(false);
         waitingRoomCollider = GameObject.FindGameObjectWithTag("waitingRoom").GetComponent<Collider>();
+        surgeryCollider = GameObject.FindGameObjectWithTag("surgeryRoom").GetComponent<Collider>();
+        surgeryCollider.enabled = false;
     }
 
 
@@ -101,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
                 Debug.Log("waitingRoom Collider disabled");
                 waitingRoomCollider.enabled = false;
                 gameObject.transform.position = officeSpawn.transform.position;
-                Camera.main.transform.rotation = Quaternion.Euler(20.0000057f,226f,0f);
                 transform.rotation = Quaternion.Euler(0, -133, 0);
                 EText.SetText("");
                 queueDialogue = true;
@@ -129,6 +132,11 @@ public class PlayerMovement : MonoBehaviour
                 Inventory.inventory[Inventory.selection].SetActive(false);
                 EText.SetText("");
                 playSound(pharmacySound);
+            } else if (canExitSurgery) {
+                EText.SetText("Are you sure you want to exit surgery? (Y/N)");
+                EText.color = TrashScript.red;
+                canConfirmExit = true;
+                canExitSurgery = false;
             }
         }
 
@@ -183,8 +191,9 @@ public class PlayerMovement : MonoBehaviour
 
 
         // SENDING PATIENT INTO SURGERY ----------------------------
-        if (Input.GetKeyDown(KeyCode.E) && isTreatmentCollider && canEnterSurgery) {
+        if (Input.GetKeyDown(KeyCode.E) && canEnterSurgery && isOrderOut) {
                 gameObject.transform.position = surgerySpawn.transform.position;
+                gameObject.transform.rotation = Quaternion.Euler(0, -210.947f, 0);
                 _inSurgery = true;
                 EText.SetText("");
                 EText.color = Color.black;
@@ -211,7 +220,9 @@ public class PlayerMovement : MonoBehaviour
             EText.color = Color.black;
             ClipboardScript.diagnosisText.SetText(ClipboardScript.dropdown.captionText.text);
             ClipboardScript.dropDownObject.SetActive(false);
-        } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
+            surgeryCollider.enabled = true;
+            Debug.Log("Surgery collider enabled");
+        } else if (Input.GetKeyDown(KeyCode.N) && canConfirmWithPatient) {
             EText.SetText("");
             canConfirmWithPatient = false;
             EText.color = Color.black;
@@ -246,6 +257,7 @@ public class PlayerMovement : MonoBehaviour
         EText.SetText("");
         Debug.Log("waitingRoom Collider enabled");
         waitingRoomCollider.enabled = true;
+        surgeryCollider.enabled = false;
 
         ClipboardScript.diagnosisText.SetText("");
         ClipboardScript.dropDownObject.SetActive(true);
@@ -277,6 +289,9 @@ public class PlayerMovement : MonoBehaviour
             canUsePharmacy = true;
         } else if (other.CompareTag("treatment")) {
             isTreatmentCollider = true;
+        } else if (other.CompareTag("postSurgery")) {
+            EText.SetText("Press E to leave surgery room");
+            canConfirmExit = true;
         }
     }
 

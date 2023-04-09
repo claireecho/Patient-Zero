@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ccaa63516ae33649a757b7ee217a76b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patientPrefab: {fileID: 0}
+  patientPrefab: {fileID: 9191797010023317911}
   officeSpawn: {fileID: 0}
   surgerySpawn: {fileID: 0}
 --- !u!82 &2380520279081952984

@@ -67,6 +67,11 @@ public class Dialogue : MonoBehaviour
             }
         }
 
+        // Can use space to skip through dialogue
+        if (DialogueIsPlaying && Input.GetKeyDown(KeyCode.Space)) {
+            nextArrow.onClick.Invoke();
+        }
+
     }
 
     public void resetNextArrow() {

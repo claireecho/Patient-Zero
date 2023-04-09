@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private GameObject[] tools = new GameObject[0];
     [SerializeField] private GameObject[] surgeryTools = new GameObject[0];
     public static GameObject[] globalTools;
+    public static GameObject[] globalSurgeryTools;
     public static GameObject[] inventory;
     public static int selection = 0;
     public TextMeshProUGUI description; 
@@ -25,6 +26,7 @@ public class Inventory : MonoBehaviour
         inventory[selection].SetActive(true);
         StartCoroutine("showDescription");
         globalTools = tools;
+        globalSurgeryTools = surgeryTools;
     }
 
     // Update is called once per frame
