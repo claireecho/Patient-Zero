@@ -8,6 +8,8 @@ public class PatientGameplay : MonoBehaviour
     public GameObject patientPrefab;
     public static GameObject patientObject;
     public static Patient patient;
+    public static GameObject mask;
+    public static GameObject cut;
     public static string[] lastNames;
     public static string[] firstNames;
     public static string[] sexes;
@@ -95,6 +97,10 @@ public class PatientGameplay : MonoBehaviour
                 confirmCollider.SetActive(true);
                 Destroy(patientObject);
                 patientObject = Instantiate(patientPrefab, officeSpawn.transform.position, officeSpawn.transform.rotation);
+                mask = patientObject.transform.GetChild(0).gameObject;
+                mask.SetActive(false);
+                cut = patientObject.transform.GetChild(1).gameObject;
+                cut.SetActive(false);
                 // transform.Rotate(0, 10f, 0);
             // if patient is eligible for surgery & order is out, move to surgery
             } else if (PlayerMovement.canEnterSurgery && PlayerMovement.isOrderOut) {

@@ -210,6 +210,7 @@ public class PlayerMovement : MonoBehaviour
             canConfirmExit = false;
             EText.color = Color.black;
             reset();
+            playSound(doorSound);
         } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
             EText.SetText("");
             canConfirmExit = false;
@@ -264,6 +265,11 @@ public class PlayerMovement : MonoBehaviour
         waitingRoomCollider.enabled = true;
         surgeryCollider.enabled = false;
 
+        Inventory.inventory = new GameObject[Inventory.globalTools.Length];
+        Inventory.inventory = Inventory.globalTools;
+        Inventory.selection = 0;
+        Inventory.inventory[Inventory.selection].SetActive(true);
+
         ClipboardScript.diagnosisText.SetText("");
         ClipboardScript.dropDownObject.SetActive(true);
         ClipboardScript.dropdown.value = 0;
@@ -316,6 +322,8 @@ public class PlayerMovement : MonoBehaviour
             canUsePharmacy = false;
         } else if (other.CompareTag("treatment")) {
             isTreatmentCollider = false;
+        } else if (other.CompareTag("postSurgery")) {
+            canExitSurgery = false;
         }
         EText.SetText("");
     }

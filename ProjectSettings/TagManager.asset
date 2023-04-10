@@ -30,6 +30,7 @@ TagManager:
   - patientOfficeSpawn
   - inSurgery
   - monitorCanvas
+  - interactWithPatient
   layers:
   - Default
   - TransparentFX
