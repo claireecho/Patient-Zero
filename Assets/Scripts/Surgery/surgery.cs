@@ -11,14 +11,20 @@ public class surgery : MonoBehaviour
     public static TextMeshProUGUI canvaText;
     public static bool canInteractWithPatient = false;
     public static int step = 0;
+
+    // step 2
     public GameObject scalpelCanvas;
     public static bool isUsingScalpel = false;
     RectTransform scalpel;
     RectTransform cut;
     public int marginSize = 355;
     int maxSize;
-    Collider interactWithPatientCollider;
     float percentage = 0;
+
+    // step 3
+    public GameObject tweezersCanvas;
+    
+    Collider interactWithPatientCollider;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,6 +34,7 @@ public class surgery : MonoBehaviour
         canvaText = canva.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         scalpelCanvas.SetActive(false);
         canva.SetActive(false);
+        tweezersCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -61,6 +68,9 @@ public class surgery : MonoBehaviour
                     case 2:
                         step2(Inventory.inventory[Inventory.selection].name);
                         break;
+                    case 3:
+                        step3(Inventory.inventory[Inventory.selection].name);
+                        break;
                     default:
                         Debug.Log("error");
                         break;
@@ -74,6 +84,14 @@ public class surgery : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space)) {
                 percentage += 0.1f;
                 Debug.Log(percentage);
+            }
+            if (percentage >= 1) {
+                isUsingScalpel = false;
+                scalpelCanvas.SetActive(false);
+                CameraLook.isPaused = false;
+                interactWithPatientCollider.enabled = true;
+                Inventory.selection = 0;
+                Inventory.inventory[Inventory.selection].SetActive(true);
             }
 
         }
@@ -130,6 +148,16 @@ public class surgery : MonoBehaviour
         } else {
             killedPatient();
         } 
+    }
+
+    void step3(string tool) {
+        if (tool == "tweezers") {
+            tweezersCanvas.SetActive(true);
+        } else if (tool == "Clipboard") {
+            
+        } else {
+            killedPatient();
+        }
     }
 
     void killedPatient() {
