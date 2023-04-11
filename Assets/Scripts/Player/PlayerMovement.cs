@@ -36,6 +36,9 @@ public class PlayerMovement : MonoBehaviour
     public static Collider waitingRoomCollider; // waiting room collider
     public GameObject defaultSpawn; // where PLAYER will spawn at default
     public static Collider surgeryCollider; // allows player to send patient into surgery
+    public static bool canTrashAffliction = false; // checks if player is standing in trash collider
+    public GameObject clipboardCanvas; // clipboard canvas
+    public GameObject bookCanvas; // book canvas
 
     public AudioSource audioSource;
 
@@ -133,6 +136,8 @@ public class PlayerMovement : MonoBehaviour
             } else if (canUsePharmacy) {
                 pharmacyWebsite.SetActive(true);
                 Inventory.inventory[Inventory.selection].SetActive(false);
+                clipboardCanvas.SetActive(false);
+                bookCanvas.SetActive(false);
                 EText.SetText("");
                 playSound(pharmacySound);
             } else if (canExitSurgery) {
@@ -303,6 +308,11 @@ public class PlayerMovement : MonoBehaviour
         } else if (other.CompareTag("postSurgery")) {
             EText.SetText("Press E to leave surgery room");
             canExitSurgery = true;
+        } else if (other.CompareTag("TrashSurgery")) {
+            if (Inventory.inventory[Inventory.selection].name == "affliction") {
+                EText.SetText("Press E to trash affliction");
+                canTrashAffliction = true;
+            }
         }
     }
 
@@ -324,6 +334,8 @@ public class PlayerMovement : MonoBehaviour
             isTreatmentCollider = false;
         } else if (other.CompareTag("postSurgery")) {
             canExitSurgery = false;
+        } else if (other.CompareTag("TrashSurgery")) {
+            canTrashAffliction = false;
         }
         EText.SetText("");
     }

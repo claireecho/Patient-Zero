@@ -18,6 +18,7 @@ public class book : MonoBehaviour
     public GameObject backButtonObject;
     public GameObject forwardButtonObject;
     public Button backButton;
+    public GameObject canvas;
     public Button forwardButton;
     private int page = 1;
     public static int maxPage = 0;
@@ -70,6 +71,7 @@ public class book : MonoBehaviour
 
     void hideBook() {
         
+        canvas.SetActive(false);
         setPosition(bookOpen, hidePosition);
         setPosition(bookClosed, closedPosition);
         leftText.SetText("");
@@ -89,6 +91,7 @@ public class book : MonoBehaviour
     }
     void showBook() {
         
+        canvas.SetActive(true);
         CameraLook.isPaused = true;
         setPosition(bookOpen, openPosition);
         setPosition(bookClosed, hidePosition);

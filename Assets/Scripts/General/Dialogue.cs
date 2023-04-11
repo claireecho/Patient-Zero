@@ -16,6 +16,8 @@ public class Dialogue : MonoBehaviour
     public static TextMeshProUGUI speakerText;
     public GameObject confirmCollider;
     public AudioSource audioSource;
+    public GameObject clipboardCanvas;
+    public GameObject bookCanvas;
 
     // Start is called before the first frame update
     void Awake()
@@ -108,6 +110,8 @@ public class Dialogue : MonoBehaviour
         audioSource.Stop();
         audioSource.Play();
         Inventory.inventory[Inventory.selection].SetActive(false);
+        clipboardCanvas.SetActive(false);
+        bookCanvas.SetActive(false);
 
         DialogueIsPlaying = true;
         PlayerMovement.queueDialogue = false;

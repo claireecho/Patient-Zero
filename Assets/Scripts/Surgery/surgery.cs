@@ -23,6 +23,11 @@ public class surgery : MonoBehaviour
 
     // step 3
     public GameObject tweezersCanvas;
+    public static RectTransform bar;
+    public static RectTransform loading;
+    public static TextMeshProUGUI loadingText;
+    public float time;
+    public GameObject affliction;
     
     Collider interactWithPatientCollider;
 
@@ -32,8 +37,12 @@ public class surgery : MonoBehaviour
         interactWithPatientCollider = GameObject.Find("interactWithPatient").GetComponent<Collider>();
         interactWithPatientCollider.enabled = true;
         canvaText = canva.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        bar = tweezersCanvas.transform.GetChild(0).GetComponent<RectTransform>();
+        loading = tweezersCanvas.transform.GetChild(1).GetComponent<RectTransform>();
+        loadingText = tweezersCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         scalpelCanvas.SetActive(false);
         canva.SetActive(false);
+        affliction.SetActive(false);
         tweezersCanvas.SetActive(false);
     }
 
@@ -68,8 +77,13 @@ public class surgery : MonoBehaviour
                     case 2:
                         step2(Inventory.inventory[Inventory.selection].name);
                         break;
-                    case 3:
+                    case 3: // step 3: remove affliction
                         step3(Inventory.inventory[Inventory.selection].name);
+                        break;
+                    case 4: // step 4: throw away affliction
+                        // did so using TrashSurgery.cs
+                        break;
+                    case 5: // step 5: suture
                         break;
                     default:
                         Debug.Log("error");
@@ -95,8 +109,6 @@ public class surgery : MonoBehaviour
             }
 
         }
-        // step 3: remove affliction
-        // step 4: suture
 
         // if player fails, patient dies
     }
@@ -121,7 +133,7 @@ public class surgery : MonoBehaviour
             PatientGameplay.mask.SetActive(true);
 
             step++;
-        } else if (tool == "Clipboard") {
+        } else if (tool == "Clipboard" || tool == "Affliction") {
             
         } else {
             killedPatient();
@@ -143,7 +155,7 @@ public class surgery : MonoBehaviour
             isUsingScalpel = true;
 
             step++;
-        } else if (tool == "Clipboard") {
+        } else if (tool == "Clipboard" || tool == "Affliction") {
             
         } else {
             killedPatient();
@@ -153,7 +165,10 @@ public class surgery : MonoBehaviour
     void step3(string tool) {
         if (tool == "tweezers") {
             tweezersCanvas.SetActive(true);
-        } else if (tool == "Clipboard") {
+            loading.sizeDelta = new Vector2(0, loading.rect.height);
+            StartCoroutine(loadingAffliction(time));
+
+        } else if (tool == "Clipboard" || tool == "Affliction") {
             
         } else {
             killedPatient();
@@ -192,6 +207,8 @@ public class surgery : MonoBehaviour
         if (other.CompareTag("interactWithPatient")) {
             canInteractWithPatient = false;
             PlayerMovement.EText.SetText("");
+            StopAllCoroutines();
+            tweezersCanvas.SetActive(false);
         }
     }
 
@@ -229,6 +246,31 @@ public class surgery : MonoBehaviour
         CameraLook.isPaused = false;
         Inventory.selection = 0;
         Inventory.inventory[0].SetActive(true);
+
+    }
+
+    IEnumerator loadingAffliction(float time) {
+
+        for (int i = 0; i < 10; i ++) {
+            yield return new WaitForSeconds(time/10);
+            loadingText.text = "Grabbing Affliction";
+            for (int j = 0; j < i % 4; j++) {
+                loadingText.text += ".";
+            }
+            loading.sizeDelta = new Vector2((bar.sizeDelta.x / 10) * (i+1), loading.sizeDelta.y);
+        }
+        tweezersCanvas.SetActive(false);
+        Inventory.inventory[Inventory.selection].SetActive(false);
+        GameObject[] newTools = new GameObject[Inventory.inventory.Length+1];
+        for (int i = 0; i < Inventory.inventory.Length; i++) {
+            newTools[i] = Inventory.inventory[i];
+        }
+        newTools[newTools.Length - 1] = affliction;
+        Inventory.inventory = new GameObject[newTools.Length];
+        Inventory.selection = Inventory.inventory.Length - 1;
+        Inventory.inventory = newTools;
+        Inventory.inventory[Inventory.selection].SetActive(true);
+        step++;
 
     }
 
