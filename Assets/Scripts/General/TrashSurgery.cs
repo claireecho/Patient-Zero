@@ -6,6 +6,8 @@ public class TrashSurgery : MonoBehaviour
 {
 
     public AudioSource audioSource;
+    public AudioClip completeSound;
+    public AudioClip trashSound;
 
     // Start is called before the first frame update
     void Awake()
@@ -19,7 +21,6 @@ public class TrashSurgery : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             if (PlayerMovement.canTrashAffliction) {
                 PlayerMovement.canTrashAffliction = false;
-                playSound(audioSource.clip);
                 Inventory.inventory[Inventory.selection].SetActive(false);
                 GameObject[] newTools = new GameObject[Inventory.inventory.Length - 1];
                 for (int i = 0; i < newTools.Length; i++) {
@@ -30,6 +31,7 @@ public class TrashSurgery : MonoBehaviour
                 Inventory.selection = 0;
                 Inventory.inventory[Inventory.selection].SetActive(true);
                 surgery.step++;
+                playSound(completeSound);
 
             }
         }

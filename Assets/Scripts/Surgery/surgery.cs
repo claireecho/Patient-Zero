@@ -37,6 +37,8 @@ public class surgery : MonoBehaviour
     public static bool isUsingSuture = false;
     
     Collider interactWithPatientCollider;
+    public AudioClip completeSound;
+    public AudioSource audioSource;
 
     // Start is called before the first frame update
     void Awake()
@@ -128,6 +130,8 @@ public class surgery : MonoBehaviour
                 interactWithPatientCollider.enabled = true;
                 Inventory.selection = 0;
                 Inventory.inventory[Inventory.selection].SetActive(true);
+                step++;
+                playSound(completeSound);
             }
 
         }
@@ -148,6 +152,7 @@ public class surgery : MonoBehaviour
                 interactWithPatientCollider.enabled = true;
                 Inventory.selection = 0;
                 Inventory.inventory[Inventory.selection].SetActive(true);
+                playSound(completeSound);
             }
         }
 
@@ -174,6 +179,7 @@ public class surgery : MonoBehaviour
             PatientGameplay.mask.SetActive(true);
 
             step++;
+            playSound(completeSound);
         } else if (tool == "Clipboard" || tool == "Affliction") {
             
         } else {
@@ -195,7 +201,7 @@ public class surgery : MonoBehaviour
             cut.sizeDelta = new Vector2(0, cut.rect.height);
             isUsingScalpel = true;
 
-            step++;
+            
         } else if (tool == "Clipboard" || tool == "Affliction") {
             
         } else {
@@ -344,7 +350,15 @@ public class surgery : MonoBehaviour
         Inventory.inventory = newTools;
         Inventory.inventory[Inventory.selection].SetActive(true);
         step++;
+        playSound(completeSound);
         isUsingTweezers = false;
+    }
+
+    public void playSound(AudioClip sound) {
+        audioSource.Stop();
+        audioSource.clip = sound;
+        audioSource.Play();
+        audioSource.loop = false;
     }
 
 

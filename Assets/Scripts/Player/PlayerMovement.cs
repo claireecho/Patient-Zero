@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     public AudioClip wrongSound;
     public AudioClip doorSound;
     public AudioClip pharmacySound;
+    public AudioClip completeSound;
 
     public static bool _inSurgery = false;
 
@@ -249,6 +250,7 @@ public class PlayerMovement : MonoBehaviour
         if (PatientGameplay.isCompleted) {
             reset();
             score++;
+            playSound(completeSound);
             PatientGameplay.isCompleted = false;
             gameObject.transform.position = officeSpawn.transform.position;
             transform.rotation = Quaternion.Euler(0, -133, 0);
