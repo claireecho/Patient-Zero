@@ -29,6 +29,12 @@ public class surgery : MonoBehaviour
     public float time;
     public GameObject affliction;
     public static bool isUsingTweezers = false;
+
+    // step 5
+    public GameObject sutureCanvas;
+    RectTransform sutureBar;
+    RectTransform suture;
+    public static bool isUsingSuture = false;
     
     Collider interactWithPatientCollider;
 
@@ -37,14 +43,23 @@ public class surgery : MonoBehaviour
     {
         interactWithPatientCollider = GameObject.Find("interactWithPatient").GetComponent<Collider>();
         interactWithPatientCollider.enabled = true;
+
         canvaText = canva.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         bar = tweezersCanvas.transform.GetChild(0).GetComponent<RectTransform>();
         loading = tweezersCanvas.transform.GetChild(1).GetComponent<RectTransform>();
         loadingText = tweezersCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
         scalpelCanvas.SetActive(false);
         canva.SetActive(false);
         affliction.SetActive(false);
         tweezersCanvas.SetActive(false);
+    }
+
+    void Start() {
+        sutureBar = sutureCanvas.transform.GetChild(3).GetComponent<RectTransform>();
+        suture = sutureCanvas.transform.GetChild(4).GetComponent<RectTransform>();
+
+        sutureCanvas.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,6 +91,7 @@ public class surgery : MonoBehaviour
                         step1(Inventory.inventory[Inventory.selection].name);
                         break;
                     case 2:
+                        percentage = 0;
                         step2(Inventory.inventory[Inventory.selection].name);
                         break;
                     case 3: // step 3: remove affliction
@@ -87,6 +103,10 @@ public class surgery : MonoBehaviour
                         // did so using TrashSurgery.cs
                         break;
                     case 5: // step 5: suture
+                        if (!isUsingSuture) {
+                            percentage = 0;
+                            step5(Inventory.inventory[Inventory.selection].name);
+                        }
                         break;
                     default:
                         Debug.Log("error");
@@ -100,7 +120,6 @@ public class surgery : MonoBehaviour
             cut.sizeDelta = new Vector2(maxSize * percentage, cut.rect.height);
             if (Input.GetKeyDown(KeyCode.Space)) {
                 percentage += 0.1f;
-                Debug.Log(percentage);
             }
             if (percentage >= 1) {
                 isUsingScalpel = false;
@@ -111,6 +130,25 @@ public class surgery : MonoBehaviour
                 Inventory.inventory[Inventory.selection].SetActive(true);
             }
 
+        }
+
+        if (isUsingSuture) {
+            float startPositionX = suture.position.x;
+            float maxSize = sutureBar.rect.width;
+            suture.anchoredPosition = new Vector2(startPositionX - (percentage * maxSize), 9);
+            sutureBar.sizeDelta = new Vector2(sutureBar.rect.width - (percentage * maxSize), sutureBar.rect.height);
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log(percentage);
+                percentage += 0.1f;
+            }
+            if (percentage >= 1) {
+                isUsingSuture = false;
+                sutureCanvas.SetActive(false);
+                CameraLook.isPaused = false;
+                interactWithPatientCollider.enabled = true;
+                Inventory.selection = 0;
+                Inventory.inventory[Inventory.selection].SetActive(true);
+            }
         }
 
         // if player fails, patient dies
@@ -176,6 +214,27 @@ public class surgery : MonoBehaviour
         } else {
             killedPatient();
         }
+    }
+
+    void step5(string tool) {
+        if (tool == "suture") {
+            interactWithPatientCollider.enabled = false;
+            PatientGameplay.cut.SetActive(false);
+            PatientGameplay.stitched.SetActive(true);
+            Inventory.inventory[Inventory.selection].SetActive(false);
+            sutureCanvas.SetActive(true);
+            CameraLook.isPaused = true;
+            PlayerMovement.EText.SetText("");
+            suture = scalpelCanvas.transform.GetChild(3).GetComponent<RectTransform>();
+            sutureBar = scalpelCanvas.transform.GetChild(2).GetComponent<RectTransform>();
+            maxSize = (int)sutureBar.rect.width;
+            suture.position = sutureBar.position;
+            isUsingSuture = true;
+        } else if (tool == "Clipboard" || tool == "Affliction") {
+            
+        } else {
+            killedPatient();
+        } 
     }
 
     void killedPatient() {

@@ -10,6 +10,7 @@ public class PatientGameplay : MonoBehaviour
     public static Patient patient;
     public static GameObject mask;
     public static GameObject cut;
+    public static GameObject stitched;
     public static string[] lastNames;
     public static string[] firstNames;
     public static string[] sexes;
@@ -101,6 +102,8 @@ public class PatientGameplay : MonoBehaviour
                 mask.SetActive(false);
                 cut = patientObject.transform.GetChild(1).gameObject;
                 cut.SetActive(false);
+                stitched = patientObject.transform.GetChild(2).gameObject;
+                stitched.SetActive(false);
                 // transform.Rotate(0, 10f, 0);
             // if patient is eligible for surgery & order is out, move to surgery
             } else if (PlayerMovement.canEnterSurgery && PlayerMovement.isOrderOut) {
