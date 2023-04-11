@@ -28,6 +28,7 @@ public class surgery : MonoBehaviour
     public static TextMeshProUGUI loadingText;
     public float time;
     public GameObject affliction;
+    public static bool isUsingTweezers = false;
     
     Collider interactWithPatientCollider;
 
@@ -78,7 +79,9 @@ public class surgery : MonoBehaviour
                         step2(Inventory.inventory[Inventory.selection].name);
                         break;
                     case 3: // step 3: remove affliction
-                        step3(Inventory.inventory[Inventory.selection].name);
+                        if (!isUsingTweezers) {
+                            step3(Inventory.inventory[Inventory.selection].name);
+                        }
                         break;
                     case 4: // step 4: throw away affliction
                         // did so using TrashSurgery.cs
@@ -195,6 +198,16 @@ public class surgery : MonoBehaviour
                 case "Clipboard":
                     PlayerMovement.EText.SetText("");
                     break;
+                case "tweezers":
+                    if (isUsingTweezers) {
+                        PlayerMovement.EText.SetText("");
+                    } else {
+                        PlayerMovement.EText.SetText("Press E to use " + Inventory.inventory[Inventory.selection].name);
+                    }
+                    break;
+                case "Affliction":
+                    PlayerMovement.EText.SetText("");
+                    break;
                 default:
                     PlayerMovement.EText.SetText("Press E to use " + Inventory.inventory[Inventory.selection].name);
                     break;
@@ -251,6 +264,7 @@ public class surgery : MonoBehaviour
 
     IEnumerator loadingAffliction(float time) {
 
+        isUsingTweezers = true;
         for (int i = 0; i < 10; i ++) {
             yield return new WaitForSeconds(time/10);
             loadingText.text = "Grabbing Affliction";
@@ -271,7 +285,7 @@ public class surgery : MonoBehaviour
         Inventory.inventory = newTools;
         Inventory.inventory[Inventory.selection].SetActive(true);
         step++;
-
+        isUsingTweezers = false;
     }
 
 

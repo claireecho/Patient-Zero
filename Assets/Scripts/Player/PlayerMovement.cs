@@ -316,6 +316,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other) {
+        if (other.CompareTag("TrashSurgery")) {
+            if (Inventory.inventory[Inventory.selection].name == "affliction") {
+                EText.SetText("Press E to trash affliction");
+                canTrashAffliction = true;
+            } else {
+                EText.SetText("");
+                canTrashAffliction = false;
+            }
+        }
+    }
+
     // collider for exits
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("waitingRoom")) {
