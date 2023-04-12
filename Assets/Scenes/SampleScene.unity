@@ -12963,7 +12963,7 @@ MonoBehaviour:
   scalpelCanvas: {fileID: 2018221649}
   marginSize: 382
   tweezersCanvas: {fileID: 1176861340}
-  time: 1
+  time: 3
   affliction: {fileID: 919132147933082072}
   sutureCanvas: {fileID: 126640433}
   marginSizeSuture: 1103
