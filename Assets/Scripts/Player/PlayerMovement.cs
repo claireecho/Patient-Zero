@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // Gravity
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = controller.isGrounded;
 
         // Movement
         if (CameraLook.isPaused == false) {
@@ -155,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (isTreatmentCollider && PatientGameplay.isCurrentPatient) {
+        if (isTreatmentCollider && PatientGameplay.isCurrentPatient && !clickedE) {
             if (PatientGameplay.confirmCollider.activeSelf == false) {
                 if (isPillsOut) {
                     EText.SetText("Press E to give " + Inventory.inventory[Inventory.selection].name + " to " + PatientGameplay.patient.getFirstName());
@@ -207,12 +208,19 @@ public class PlayerMovement : MonoBehaviour
 
         // SENDING PATIENT INTO SURGERY ----------------------------
         if (Input.GetKeyDown(KeyCode.E) && canEnterSurgery && isOrderOut) {
-                gameObject.transform.position = surgerySpawn.transform.position;
-                gameObject.transform.rotation = Quaternion.Euler(0, -210.947f, 0);
-                _inSurgery = true;
-                EText.SetText("");
-                EText.color = Color.black;
-                playSound(doorSound);
+                if (PatientGameplay.treatments[Array.IndexOf(PatientGameplay.diagnoses, ClipboardScript.diagnosisText.text)] == "Surgery") {
+                    gameObject.transform.position = surgerySpawn.transform.position;
+                    gameObject.transform.rotation = Quaternion.Euler(0, -210.947f, 0);
+                    _inSurgery = true;
+                    EText.SetText("");
+                    EText.color = Color.black;
+                    playSound(doorSound);
+                } else {
+                    clickedE = true;
+                    EText.SetText("[" + ClipboardScript.diagnosisText.text + "]" + " is not a surgery diagnosis.");
+                    EText.color = TrashScript.red;
+                    playSound(wrongSound);
+                }
         }
 
         // FOR LEAVING SURGERY ----------------------------
@@ -375,6 +383,7 @@ public class PlayerMovement : MonoBehaviour
 
     // collider for exits
     private void OnTriggerExit(Collider other) {
+        clickedE = false;
         if (other.CompareTag("waitingRoom")) {
             canGrabPatient = false;
         } else if (other.CompareTag("officeRoom")) {
