@@ -56,6 +56,10 @@ public class surgery : MonoBehaviour
         loading = tweezersCanvas.transform.GetChild(1).GetComponent<RectTransform>();
         loadingText = tweezersCanvas.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
+        scalpel = scalpelCanvas.transform.GetChild(3).GetComponent<RectTransform>();
+        cut = scalpelCanvas.transform.GetChild(2).GetComponent<RectTransform>();
+        maxSize = (int)cut.rect.width;
+
         scalpelCanvas.SetActive(false);
         canva.SetActive(false);
         affliction.SetActive(false);
@@ -164,6 +168,7 @@ public class surgery : MonoBehaviour
                     gameObject.transform.position = PlayerMovement.globalOfficeSpawn.transform.position;
                     transform.rotation = Quaternion.Euler(0, -133, 0);
                 }
+                Debug.Log(PatientGameplay.patient.getDiagnosis() + " " + ClipboardScript.diagnosisText.text);
                 isSurgeryComplete = true;
                 PatientGameplay.patientObject.transform.position = PatientGameplay._officeSpawn.transform.position;
                 PatientGameplay.patientObject.transform.rotation = PatientGameplay._officeSpawn.transform.rotation;
@@ -211,11 +216,9 @@ public class surgery : MonoBehaviour
             scalpelCanvas.SetActive(true);
             CameraLook.isPaused = true;
             PlayerMovement.EText.SetText("");
-            scalpel = scalpelCanvas.transform.GetChild(3).GetComponent<RectTransform>();
-            cut = scalpelCanvas.transform.GetChild(2).GetComponent<RectTransform>();
-            maxSize = (int)cut.rect.width;
             cut.sizeDelta = new Vector2(0, cut.rect.height);
             isUsingScalpel = true;
+            percentage = 0;
 
             
         } else if (tool == "Clipboard" || tool == "Affliction") {
