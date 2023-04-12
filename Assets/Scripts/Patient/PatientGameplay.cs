@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using System.IO;
+using Random=UnityEngine.Random;
 
 public class PatientGameplay : MonoBehaviour
 {
@@ -111,9 +113,11 @@ public class PatientGameplay : MonoBehaviour
                 // transform.Rotate(0, 10f, 0);
             // if patient is eligible for surgery & order is out, move to surgery
             } else if (PlayerMovement.canEnterSurgery && PlayerMovement.isOrderOut) {
-                PlayerMovement._inSurgery = true;
-                patientObject.transform.position = surgerySpawn.transform.position;
-                patientObject.transform.rotation = surgerySpawn.transform.rotation;
+                if (treatments[Array.IndexOf(diagnoses, ClipboardScript.diagnosisText.text)] == "Surgery") {
+                    PlayerMovement._inSurgery = true;
+                    patientObject.transform.position = surgerySpawn.transform.position;
+                    patientObject.transform.rotation = surgerySpawn.transform.rotation;
+                }
             }
         }
 
