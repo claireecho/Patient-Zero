@@ -18,6 +18,7 @@ public class PatientGameplay : MonoBehaviour
     public static string[] concerns;
     public static string[] treatments;
     public GameObject officeSpawn;
+    public static GameObject _officeSpawn;
     public GameObject surgerySpawn;
     public static GameObject confirmCollider;
     public static bool isCurrentPatient = false;
@@ -27,7 +28,6 @@ public class PatientGameplay : MonoBehaviour
     // may need to change path if files change location depending on user
     void Awake()
     {
-
         // initialize patient
         surgerySpawn = GameObject.FindGameObjectWithTag("patientSurgerySpawn");
         officeSpawn = GameObject.FindGameObjectWithTag("patientOfficeSpawn");
@@ -67,6 +67,10 @@ public class PatientGameplay : MonoBehaviour
         book.maxPage = diagnoses.Length / book.numberOfDOnPage + (diagnoses.Length % book.numberOfDOnPage == 0 ? 0 : 1);
         
 
+    }
+
+    void Start() {
+        _officeSpawn = officeSpawn;
     }
 
     // Update is called once per frame

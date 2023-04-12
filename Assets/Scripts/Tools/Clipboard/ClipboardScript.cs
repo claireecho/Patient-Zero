@@ -89,11 +89,13 @@ public class ClipboardScript : MonoBehaviour
     }
     void showClipboard() {
         // changes position and rotation of clipboard
-        clipboardCanvas.SetActive(true);
         transform.position = secondPosition.transform.position;
         transform.rotation = secondPosition.transform.rotation;
         CameraLook.isPaused = true;
 
+        if (PatientGameplay.patient.getFirstName() != "N/A") {
+            clipboardCanvas.SetActive(true);
+        }
 
         // show text on clipboard
         objectiveText.SetText(PatientGameplay.patient.toString());

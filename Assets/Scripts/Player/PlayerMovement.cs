@@ -14,6 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 velocity; // Determines how fast PLAYER is moving
     private bool isGrounded; // Determines if PLAYER is on the ground
     public GameObject officeSpawn; // where PLAYER will spawn after interacting with waiting room collider / hallway collider
+    public static GameObject globalOfficeSpawn; // GLOBAL: where PLAYER will spawn after interacting with waiting room collider / hallway collider
     public static bool canGrabPatient = false; // checks if player is standing in waiting room collider
     private bool canLeaveOffice = false; // checks if player is standing in officeExit collider
     public GameObject hallwaySpawn; // where PLAYER will spawn after interacting with officeExit collider
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
     public static bool canTrashAffliction = false; // checks if player is standing in trash collider
     public GameObject clipboardCanvas; // clipboard canvas
     public GameObject bookCanvas; // book canvas
+    bool clickedE = false; // checks if player has clicked E
 
     public AudioSource audioSource;
 
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        globalOfficeSpawn = officeSpawn;
         score = 0;
         EText = GameObject.FindWithTag("text").GetComponent<TextMeshProUGUI>();
         EText.SetText("");
@@ -126,11 +129,13 @@ public class PlayerMovement : MonoBehaviour
             } else if (canConfirmWithPatient) {
                 // double check if player wants to exit
                 if (ClipboardScript.dropdown.captionText.text == "N/A") {
+                    clickedE = true;
                     EText.SetText("You must choose a diagnosis before confirming with your patient");
                     playSound(wrongSound);
                     EText.color = TrashScript.red;
                     canConfirmWithPatient = false;
                 } else {
+                    clickedE = true;
                     EText.SetText("Are you sure [" + ClipboardScript.dropdown.captionText.text + "] is the current diagnosis for " + PatientGameplay.patient.getFirstName() + "? (Y/N)");
                     EText.color = TrashScript.red;
                 }
@@ -142,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
                 EText.SetText("");
                 playSound(pharmacySound);
             } else if (canExitSurgery) {
+                clickedE = true;
                 EText.SetText("You will abandon this patient. Are you sure you want to leave? (Y/N)");
                 EText.color = TrashScript.red;
                 canConfirmExit = true;
@@ -217,14 +223,16 @@ public class PlayerMovement : MonoBehaviour
             EText.color = Color.black;
             reset();
             playSound(doorSound);
+            clickedE = false;
         } else if (Input.GetKeyDown(KeyCode.N) && canConfirmExit) {
             EText.SetText("");
             canConfirmExit = false;
             EText.color = Color.black;
+            clickedE = false;
         }
 
         // CONFIRMING DIAGNOSIS WITH PATIENT ----------------------------
-        if (Input.GetKeyDown(KeyCode.Y) && canConfirmWithPatient) {
+        if (Input.GetKeyDown(KeyCode.Y) && canConfirmWithPatient && ClipboardScript.dropdown.captionText.text != "N/A") {
             ConfirmedWithPatient = true;
             EText.SetText("");
             canConfirmWithPatient = false;
@@ -232,11 +240,13 @@ public class PlayerMovement : MonoBehaviour
             ClipboardScript.diagnosisText.SetText(ClipboardScript.dropdown.captionText.text);
             ClipboardScript.dropDownObject.SetActive(false);
             surgeryCollider.enabled = true;
+            clickedE = false;
             Debug.Log("Surgery collider enabled");
-        } else if (Input.GetKeyDown(KeyCode.N) && canConfirmWithPatient) {
+        } else if (Input.GetKeyDown(KeyCode.N) && canConfirmWithPatient && ClipboardScript.dropdown.captionText.text != "N/A") {
             EText.SetText("");
             canConfirmWithPatient = false;
             EText.color = Color.black;
+            clickedE = false;
         }
 
         // DIALOGUE FOR CONFIRMING DIAGNOSIS WITH PATIENT ----------------------------
@@ -250,7 +260,6 @@ public class PlayerMovement : MonoBehaviour
         if (PatientGameplay.isCompleted) {
             reset();
             score++;
-            playSound(completeSound);
             PatientGameplay.isCompleted = false;
             gameObject.transform.position = officeSpawn.transform.position;
             transform.rotation = Quaternion.Euler(0, -133, 0);
@@ -326,6 +335,40 @@ public class PlayerMovement : MonoBehaviour
             } else {
                 EText.SetText("");
                 canTrashAffliction = false;
+            }
+        }
+        if (CameraLook.isPaused) {
+            EText.SetText("");
+        } else {
+            if (!clickedE) {
+                if (other.CompareTag("waitingRoom")) {
+                    EText.SetText("Press E to grab patient");
+                    canGrabPatient = true;
+                } else if (other.CompareTag("officeRoom")) {
+                    EText.SetText("Press E to enter hallway");
+                    canLeaveOffice = true;
+                } else if (other.CompareTag("hallwayRoom")) {
+                    EText.SetText("Press E to enter office");
+                    canEnterOffice = true;
+                } else if (other.CompareTag("surgeryRoom")) {
+                    canEnterSurgery = true;
+                } else if (other.CompareTag("confirmWithPatient") && PatientGameplay.isCurrentPatient) {
+                    EText.SetText("Press E to confirm diagnosis with " + PatientGameplay.patient.getFirstName());
+                    canConfirmWithPatient = true;
+                } else if (other.CompareTag("pharmacy")) {
+                    EText.SetText("Press E to access pharmacy supply");
+                    canUsePharmacy = true;
+                } else if (other.CompareTag("treatment")) {
+                    isTreatmentCollider = true;
+                } else if (other.CompareTag("postSurgery")) {
+                    EText.SetText("Press E to leave surgery room");
+                    canExitSurgery = true;
+                } else if (other.CompareTag("TrashSurgery")) {
+                    if (Inventory.inventory[Inventory.selection].name == "affliction") {
+                        EText.SetText("Press E to trash affliction");
+                        canTrashAffliction = true;
+                    }
+                }
             }
         }
     }

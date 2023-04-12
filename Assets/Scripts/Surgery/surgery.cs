@@ -32,13 +32,18 @@ public class surgery : MonoBehaviour
 
     // step 5
     public GameObject sutureCanvas;
-    RectTransform sutureBar;
+    Image sutureBar;
     RectTransform suture;
     public static bool isUsingSuture = false;
+    int startPositionX;
+    public int marginSizeSuture;
+    int maxSizeSuture;
     
     Collider interactWithPatientCollider;
     public AudioClip completeSound;
     public AudioSource audioSource;
+
+    public static bool isSurgeryComplete = false;
 
     // Start is called before the first frame update
     void Awake()
@@ -58,7 +63,7 @@ public class surgery : MonoBehaviour
     }
 
     void Start() {
-        sutureBar = sutureCanvas.transform.GetChild(3).GetComponent<RectTransform>();
+        sutureBar = sutureCanvas.transform.GetChild(3).GetComponent<Image>();
         suture = sutureCanvas.transform.GetChild(4).GetComponent<RectTransform>();
 
         sutureCanvas.SetActive(false);
@@ -137,13 +142,11 @@ public class surgery : MonoBehaviour
         }
 
         if (isUsingSuture) {
-            float startPositionX = suture.position.x;
-            float maxSize = sutureBar.rect.width;
-            suture.anchoredPosition = new Vector2(startPositionX - (percentage * maxSize), 9);
-            sutureBar.sizeDelta = new Vector2(sutureBar.rect.width - (percentage * maxSize), sutureBar.rect.height);
+            suture.anchoredPosition = new Vector2(584 - (percentage * marginSizeSuture), 9);
+            sutureBar.fillAmount = 1f - percentage;
             if (Input.GetKeyDown(KeyCode.Space)) {
-                Debug.Log(percentage);
                 percentage += 0.1f;
+                Debug.Log(percentage);
             }
             if (percentage >= 1) {
                 isUsingSuture = false;
@@ -152,7 +155,20 @@ public class surgery : MonoBehaviour
                 interactWithPatientCollider.enabled = true;
                 Inventory.selection = 0;
                 Inventory.inventory[Inventory.selection].SetActive(true);
-                playSound(completeSound);
+                if (PatientGameplay.patient.getTreatment() == "Surgery" && PatientGameplay.patient.getDiagnosis() == ClipboardScript.diagnosisText.text) {
+                    PatientGameplay.patient.Success();
+                    gameObject.transform.position = PlayerMovement.globalOfficeSpawn.transform.position;
+                    transform.rotation = Quaternion.Euler(0, -133, 0);
+                } else {
+                    PatientGameplay.patient.Failure();
+                    gameObject.transform.position = PlayerMovement.globalOfficeSpawn.transform.position;
+                    transform.rotation = Quaternion.Euler(0, -133, 0);
+                }
+                isSurgeryComplete = true;
+                PatientGameplay.patientObject.transform.position = PatientGameplay._officeSpawn.transform.position;
+                PatientGameplay.patientObject.transform.rotation = PatientGameplay._officeSpawn.transform.rotation;
+                PatientGameplay.mask.SetActive(false);
+                audioSource.Stop();
             }
         }
 
@@ -231,10 +247,10 @@ public class surgery : MonoBehaviour
             sutureCanvas.SetActive(true);
             CameraLook.isPaused = true;
             PlayerMovement.EText.SetText("");
-            suture = scalpelCanvas.transform.GetChild(3).GetComponent<RectTransform>();
-            sutureBar = scalpelCanvas.transform.GetChild(2).GetComponent<RectTransform>();
-            maxSize = (int)sutureBar.rect.width;
-            suture.position = sutureBar.position;
+            suture.anchoredPosition = new Vector2(584, 9);
+            maxSizeSuture = (int)sutureBar.gameObject.GetComponent<RectTransform>().rect.width;
+
+            startPositionX = (int)suture.anchoredPosition.x;
             isUsingSuture = true;
         } else if (tool == "Clipboard" || tool == "Affliction") {
             
@@ -270,7 +286,7 @@ public class surgery : MonoBehaviour
                         PlayerMovement.EText.SetText("Press E to use " + Inventory.inventory[Inventory.selection].name);
                     }
                     break;
-                case "Affliction":
+                case "affliction":
                     PlayerMovement.EText.SetText("");
                     break;
                 default:
@@ -349,6 +365,7 @@ public class surgery : MonoBehaviour
         Inventory.selection = Inventory.inventory.Length - 1;
         Inventory.inventory = newTools;
         Inventory.inventory[Inventory.selection].SetActive(true);
+        Inventory.isShowingDescription = true;
         step++;
         playSound(completeSound);
         isUsingTweezers = false;

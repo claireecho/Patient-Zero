@@ -1024,8 +1024,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   patientPrefab: {fileID: 9191797010023317911}
-  officeSpawn: {fileID: 0}
-  surgerySpawn: {fileID: 0}
+  officeSpawn: {fileID: 8283667189834559788, guid: b66523bf35a72f543ae352cf89a946e6, type: 3}
+  surgerySpawn: {fileID: 408149584426397067, guid: 6f2a69ca0a7bc014a8de9607b54d5cd1, type: 3}
 --- !u!82 &2380520279081952984
 AudioSource:
   m_ObjectHideFlags: 0

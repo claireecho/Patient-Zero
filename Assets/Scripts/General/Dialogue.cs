@@ -18,6 +18,7 @@ public class Dialogue : MonoBehaviour
     public AudioSource audioSource;
     public GameObject clipboardCanvas;
     public GameObject bookCanvas;
+    public AudioClip dialogueSound;
 
     // Start is called before the first frame update
     void Awake()
@@ -68,6 +69,25 @@ public class Dialogue : MonoBehaviour
                 startDialogue();
             }
         }
+        // Patient finished surgery-------------------
+        if (surgery.isSurgeryComplete) {
+            if (PatientGameplay.patient.getTreated() == "YES") {
+                surgery.isSurgeryComplete = false;
+                setDialogue(new string[,] {
+                    {"You", "Your surgery is done " + PatientGameplay.patient.getFirstName() + "! I hope you feel better soon!"},
+                    {PatientGameplay.patient.getFirstName(), "Thank you so much!"},
+                    {"You", "No problem! I'm glad to help!"}
+                });
+                startDialogue();
+            } else if (PatientGameplay.patient.getTreated() == "NO") {
+                surgery.isSurgeryComplete = false;
+                setDialogue(new string[,] {
+                    {"You", "Your surgery is done " + PatientGameplay.patient.getFirstName() + "! I hope you feel better soon!"},
+                    {PatientGameplay.patient.getFirstName(), "..."},
+                });
+                startDialogue();
+            }
+        }
 
         // Can use space to skip through dialogue
         if (DialogueIsPlaying && Input.GetKeyDown(KeyCode.Space)) {
@@ -105,10 +125,9 @@ public class Dialogue : MonoBehaviour
 
     public void startDialogue() {
         resetNextArrow();
+        playSound(dialogueSound);
         CameraLook.isPaused = true;
         Canvas.SetActive(true);
-        audioSource.Stop();
-        audioSource.Play();
         Inventory.inventory[Inventory.selection].SetActive(false);
         clipboardCanvas.SetActive(false);
         bookCanvas.SetActive(false);
@@ -117,6 +136,15 @@ public class Dialogue : MonoBehaviour
         PlayerMovement.queueDialogue = false;
         PlayerMovement.ConfirmedWithPatient = false;
 
+
+
+    }
+
+    public void playSound(AudioClip sound) {
+        audioSource.Stop();
+        audioSource.clip = sound;
+        audioSource.Play();
+        audioSource.loop = false;
     }
 
 }

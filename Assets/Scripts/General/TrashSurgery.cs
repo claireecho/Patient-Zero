@@ -9,12 +9,6 @@ public class TrashSurgery : MonoBehaviour
     public AudioClip completeSound;
     public AudioClip trashSound;
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
-
     // Update is called once per frame
     void Update()
     {
